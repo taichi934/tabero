@@ -14,70 +14,6 @@ String prettyPrintHTML(String s) {
     .replace("\n", "<br>\n");
 }
 
-public class MyHttpClient {
-    public String url = "http://geoapi.heartrails.com/api/xml?method=searchByGeoLocation"; /* URL */
-    public String encoding = "UTF-8"; /* レスポンスの文字コード */
-    public String header = ""; /* レスポンスヘッダ文字列 */
-    public String body = ""; /* レスポンスボディ */
-
-    // 2つの引数（URL，エンコーディング）をとるコンストラクタ
-    public MyHttpClient(String url_, String encoding_) {
-	url = url_;
-	encoding = encoding_;
-    }
-
-    // 1つの引数（URL）をとるコンストラクタ
-    public MyHttpClient(String url_) {
-	url = url_;
-    }
-
-    /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
-    public void doAccess()
-    throws MalformedURLException, ProtocolException, IOException {
-
-	/* 接続準備 */
-	URL u = new URL(url);
-	HttpURLConnection con = (HttpURLConnection)u.openConnection();
-	con.setRequestMethod("GET");
-	con.setInstanceFollowRedirects(true);
-
-	/* 接続 */
-	con.connect();
-
-	/* レスポンスヘッダの獲得 */
-	Map<String, List<String>> headers = con.getHeaderFields();
-	StringBuilder sb = new StringBuilder();
-	Iterator<String> it = headers.keySet().iterator();
-
-	while (it.hasNext()) {
-	    String key = (String) it.next();
-	    sb.append("  " + key + ": " + headers.get(key) + "\n");
-	}
-
-	/* レスポンスコードとメッセージ */
-	sb.append("RESPONSE CODE [" + con.getResponseCode() + "]\n");
-	sb.append("RESPONSE MESSAGE [" + con.getResponseMessage() + "]\n");
-
-	header = sb.toString();
-
-	/* レスポンスボディの獲得 */
-	BufferedReader reader = new BufferedReader(
-	    new InputStreamReader(con.getInputStream(),
-		encoding));
-	String line;
-	sb = new StringBuilder();
-
-	while ((line = reader.readLine()) != null) {
-	    sb.append(line + "\n");
-	}
-
-	body = sb.toString();
-
-	/* 接続終了 */
-	reader.close();
-	con.disconnect();
-    }
-}
 // 読み出すファイルが存在するのかチェック
 private static boolean checkBeforeReadfile(File file){
     if (file.exists()){
@@ -90,7 +26,7 @@ private static boolean checkBeforeReadfile(File file){
 }
 
 private static String readXmlSavedInFile(void)  {
-    String xml;
+    String json;
     try{
         File file = new File("response.txt");
 
@@ -99,11 +35,11 @@ private static String readXmlSavedInFile(void)  {
 
             String str;
             while((str = br.readLine()) != null){
-                xml+=str;
+                json+=str;
             }
 
             br.close();
-            retun xml;
+            retun json;
         }else{
             System.out.println("ファイルが見つからないか開けません");
         }
@@ -138,14 +74,22 @@ s = readXmlSavedInFile();
 
 <body>
     <%= msg %>
-    <input type="button" onclick="location.href='./form.jsp'" value="検索ページへ戻る">
+    <!-- 後で写真や店舗名、説明分などはjavaの変数で置き換える -->
+    <div class="shop">
+        <img src="McDonalds.jpg" alt="店舗写真">
+        <h3>店舗名</h3>
+        <p>マクドナルドは世界約100ヶ国以上あり、トレーニングセンターは各国にありますが、ハンバーガー大学(HU)は7ヶ国にしかありません。その一つが東京です。1971年日本のハンバーガー大学は銀座1号店のオープンより1ヶ月早くオープンしています。マクドナルドのピープルビジネスを物語るストーリ―として、我々がいつも日本のハンバーガー大学を語るときに真っ先に皆に伝えるストーリーです。日本では年間約10000人の受講者がハンバーガー大学を卒業しています。
+        </p>
+    </div>
     <div>
-        <h3>店舗までの経路を検索</h3>
-        <form action="route.jsp" method="get">
-            <label for="nearest">最寄り駅</label>
-            <input type="text" name="station" id="nearest" size="20" placeholder="渋谷駅">
-            <button type="submit">経路を検索</button>
-        </form>
+        <div>
+            <h3>店舗までの経路を検索</h3>
+            <form action="route.jsp" method="get">
+                <label for="nearest">最寄り駅</label>
+                <input type="text" name="station" id="nearest" size="20" placeholder="渋谷駅">
+                <button type="submit">経路を検索</button>
+            </form>
+        </div>
     </div>
 </body>
 
