@@ -26,7 +26,7 @@ private static boolean checkBeforeReadfile(File file){
 }
 
 private static String readXmlSavedInFile(void)  {
-    String xml;
+    String json;
     try{
         File file = new File("response.txt");
 
@@ -35,11 +35,11 @@ private static String readXmlSavedInFile(void)  {
 
             String str;
             while((str = br.readLine()) != null){
-                xml+=str;
+                json+=str;
             }
 
             br.close();
-            retun xml;
+            retun json;
         }else{
             System.out.println("ファイルが見つからないか開けません");
         }
@@ -73,6 +73,7 @@ s = readXmlSavedInFile();
 </head>
 
 <body>
+    <%= msg %>
     <!-- 後で写真や店舗名、説明分などはjavaの変数で置き換える -->
     <div class="shop">
         <img src="McDonalds.jpg" alt="店舗写真">
