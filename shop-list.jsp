@@ -91,8 +91,8 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 //boolean optionEscape = ("1".equals(request.getParameter("E"))); // レスポンスボディをHTMLエスケープするならtrue
 
 // パラメータ
-String ido = request.getParameter("ido");
-String keido = request.getParameter("keido");
+String shop = request.getParameter("u");
+String pref = request.getParameter("pref");
 
 // 結果格納する配列
 String id[] = new String[10];
@@ -152,7 +152,7 @@ String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
 
-String url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=&name=王将"; // keyidは未記入
+String url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=&name=" + shop + "&pref=" + pref; // keyidは未記入
 
 if (url != null) {
     try {
