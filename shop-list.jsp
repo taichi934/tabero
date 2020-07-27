@@ -152,7 +152,7 @@ String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
 
-String url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=&name=王将"; // キーは未記入
+String url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=&name=王将"; // keyidは未記入
 
 if (url != null) {
     try {
