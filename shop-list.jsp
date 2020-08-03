@@ -84,15 +84,22 @@ public class MyHttpClient {
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
 
+String url_ = "";
 String msg = ""; // 結果メッセージ
-String s = ""; // bodyの内容
+String s = "";// bodyの内容
+String s1 = "";
 MyHttpClient mhc; // HTTPで通信するためのインスタンス
 
 //boolean optionEscape = ("1".equals(request.getParameter("E"))); // レスポンスボディをHTMLエスケープするならtrue
 
 // パラメータ
 String shop = request.getParameter("u");
-String pref = request.getParameter("pref");
+String pref = "";
+if (request.getParameter("t").isEmpty()) {
+	pref = request.getParameter("t");
+} else {
+	pref = "PREF" + request.getParameter("t");
+}
 
 // 結果格納する配列
 String id[] = new String[10];
@@ -144,15 +151,15 @@ String mobile_coupon[] = new String[10];
 String pc_coupon[] = new String[10];
 
 // その他
-int pos1;
-int pos2;
+int pos1 = 0;
+int pos2 = 0;
 int n = 0;
 String count = ""; // 検索該当数
 String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
 
-String url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=&name=" + shop + "&pref=" + pref; // keyidは未記入
+url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&name=" + shop + "&pref=" + pref; // keyidは未記入
 
 if (url != null) {
     try {
@@ -199,13 +206,13 @@ for (int i = 0; i < 10; i++) {
 
 	pos1 = s.indexOf("\"name\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
-    name[i] = s.substring(pos1 + "\"name\":".length(), pos2);
+	pos2 = s.indexOf("\",", n);
+    name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"name_kana\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
-    name_kana[i] = s.substring(pos1 + "\"name_kana\":".length(), pos2);
+	pos2 = s.indexOf("\",", n);
+    name_kana[i] = s.substring(pos1 + "\"name_kana\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"latitude\":", n);
 	n = pos1 + 1;
@@ -239,7 +246,7 @@ for (int i = 0; i < 10; i++) {
 
 	pos1 = s.indexOf("\"mobile\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
+	pos2 = s.indexOf("}", n);
     mobile[i] = s.substring(pos1 + "\"mobile\":".length(), pos2);
 
 	pos1 = s.indexOf("\"shop_image1\":", n);
@@ -254,7 +261,7 @@ for (int i = 0; i < 10; i++) {
 
 	pos1 = s.indexOf("\"qrcode\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
+	pos2 = s.indexOf("}", n);
     qrcode[i] = s.substring(pos1 + "\"qrcode\":".length(), pos2);
 
 	pos1 = s.indexOf("\"address\":", n);
@@ -309,7 +316,7 @@ for (int i = 0; i < 10; i++) {
 
 	pos1 = s.indexOf("\"note\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
+	pos2 = s.indexOf("}", n);
     note[i] = s.substring(pos1 + "\"note\":".length(), pos2);
 
 	pos1 = s.indexOf("\"parking_lots\":", n);
@@ -324,7 +331,7 @@ for (int i = 0; i < 10; i++) {
 
 	pos1 = s.indexOf("\"pr_long\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
+	pos2 = s.indexOf("}", n);
     pr_long[i] = s.substring(pos1 + "\"pr_long\":".length(), pos2);
 
 	pos1 = s.indexOf("\"areacode\":", n);
@@ -427,11 +434,11 @@ for (int i = 0; i < 10; i++) {
         <title>店舗一覧</title>
     </head>
     <body>
-    	<%= count %>
-    	<%= pages %>
-    	<%= page_num %>
+    	<%= count %><br>
+    	<%= pages %><br>
+    	<%= page_num %><br>
     	<% for (int i = 0; i < cou; i++) {%>
-	        <%= id[i] %>
+	       <!--   <%= id[i] %>
 	        <%= update_date[i] %>
 	        <%= name[i] %>
 	        <%= name_kana[i] %>
@@ -477,8 +484,10 @@ for (int i = 0; i < 10; i++) {
 	        <%= e_money[i] %>
 	        <%= mobile_site[i] %>
 	        <%= mobile_coupon[i] %>
-	        <%= pc_coupon[i] %>
+	        <%= pc_coupon[i] %> -->
+
+	        <%= name[i] %>
+	        （<%= name_kana[i] %>）<br>
     	<% } %>
-		<%= s %>
     </body>
 </html>
