@@ -94,12 +94,19 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 
 // パラメータ
 String shop = request.getParameter("u");
-String pref = "";
-if (request.getParameter("t").isEmpty()) {
-	pref = request.getParameter("t");
-} else {
-	pref = "PREF" + request.getParameter("t");
-}
+String pref = request.getParameter("t");
+String lunch_ = request.getParameter("a");
+String credit = request.getParameter("b");
+String take_out = request.getParameter("c");
+String parking = request.getParameter("d");
+String power = request.getParameter("e");
+String wifi = request.getParameter("f");
+String alleat = request.getParameter("g");
+String pet = request.getParameter("h");
+String delivery = request.getParameter("i");
+String ele_money = request.getParameter("j");
+String l_alleat = request.getParameter("k");
+String reservation = request.getParameter("l");
 
 // 結果格納する配列
 String id[] = new String[10];
@@ -159,7 +166,7 @@ String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
 
-url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&name=" + shop + "&pref=" + pref; // keyidは未記入
+url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking;// + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 
 if (url != null) {
     try {
