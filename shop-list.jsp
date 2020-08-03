@@ -14,6 +14,14 @@ String prettyPrintHTML(String s) {
     .replace("\n", "<br>\n");
 }
 
+String check (String s) {
+	if (s == null) {
+		s = "";
+	}
+
+	return s;
+}
+
 public class MyHttpClient {
     public String url = ""; /* URL */
     public String encoding = "UTF-8"; /* レスポンスの文字コード */
@@ -90,23 +98,33 @@ String s = "";// bodyの内容
 String s1 = "";
 MyHttpClient mhc; // HTTPで通信するためのインスタンス
 
-//boolean optionEscape = ("1".equals(request.getParameter("E"))); // レスポンスボディをHTMLエスケープするならtrue
-
 // パラメータ
 String shop = request.getParameter("u");
 String pref = request.getParameter("t");
 String lunch_ = request.getParameter("a");
+lunch_ = check(lunch_);
 String credit = request.getParameter("b");
+credit = check(credit);
 String take_out = request.getParameter("c");
+take_out = check(take_out);
 String parking = request.getParameter("d");
+parking = check(parking);
 String power = request.getParameter("e");
+power = check(power);
 String wifi = request.getParameter("f");
+wifi = check(wifi);
 String alleat = request.getParameter("g");
+alleat = check(alleat);
 String pet = request.getParameter("h");
+pet = check(pet);
 String delivery = request.getParameter("i");
+delivery = check(delivery);
 String ele_money = request.getParameter("j");
+ele_money = check(ele_money);
 String l_alleat = request.getParameter("k");
+l_alleat = check(l_alleat);
 String reservation = request.getParameter("l");
+reservation = check(reservation);
 
 // 結果格納する配列
 String id[] = new String[10];
@@ -120,7 +138,6 @@ String url[] = new String[10];
 String url_mobile[] = new String[10];
 String pc[] = new String[10];
 String mobile[] = new String[10];
-String image_url[] = new String[10];
 String shop_image1[] = new String[10];
 String shop_image2[] = new String[10];
 String qrcode[] = new String[10];
@@ -166,7 +183,7 @@ String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
 
-url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking;// + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
+url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 
 if (url != null) {
     try {
@@ -456,7 +473,6 @@ for (int i = 0; i < 10; i++) {
 	        <%= url_mobile[i] %>
 	        <%= pc[i] %>
 	        <%= mobile[i] %>
-	        <%= image_url[i] %>
 	        <%= shop_image1[i] %>
 	        <%= shop_image2[i] %>
 	        <%= qrcode[i] %>
@@ -495,6 +511,10 @@ for (int i = 0; i < 10; i++) {
 
 	        <%= name[i] %>
 	        （<%= name_kana[i] %>）<br>
+	        <%= mobile[i] %>
+	        <%= image_url[i] %>
+	        <%= shop_image1[i] %>
+	        <%= shop_image2[i] %>
     	<% } %>
     </body>
 </html>
