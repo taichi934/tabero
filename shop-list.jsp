@@ -33,14 +33,14 @@ public class MyHttpClient {
 	encoding = encoding_;
     }
 
-    // 1つの引数（URL）をとるコンストラクタ
-    public MyHttpClient(String url_) {
-	url = url_;
-    }
+  // 1つの引数（URL）をとるコンストラクタ
+  public MyHttpClient(String url_) {
+	  url = url_;
+  }
 
-    /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
-    public void doAccess()
-    throws MalformedURLException, ProtocolException, IOException {
+  /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
+  public void doAccess()
+  throws MalformedURLException, ProtocolException, IOException {
 
 	/* 接続準備 */
 	URL u = new URL(url);
@@ -55,6 +55,7 @@ public class MyHttpClient {
 	Map<String, List<String>> headers = con.getHeaderFields();
 	StringBuilder sb = new StringBuilder();
 	Iterator<String> it = headers.keySet().iterator();
+
 
 	while (it.hasNext()) {
 	    String key = (String) it.next();
@@ -77,7 +78,6 @@ public class MyHttpClient {
 	while ((line = reader.readLine()) != null) {
 	    sb.append(line + "\n");
 	}
-
 	body = sb.toString();
 
 	/* 接続終了 */
@@ -103,7 +103,6 @@ if(shop == null) {
 }
 shop = check(shop);
 session.setAttribute("shop", shop);
-
 String pref = request.getParameter("t");
 if(pref == null) {
 	pref = (String)session.getAttribute("pref");
@@ -215,7 +214,8 @@ String count = ""; // 検索該当数
 String page_num = ""; // 表示ページ
 int cou = 0;
 
-url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
+String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
+url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&" + params;
 
 if (url_ != null) {
     try {
@@ -249,141 +249,146 @@ for (int i = 0; i < 20; i++) {
 	if (n == 0) {
 		break;
 	}
-    update_date[i] = s.substring(pos1 + "\"update_date\": \"".length(), pos2);
-
-	pos1 = s.indexOf("\"name\":", n);
+  update_date[i] = s.substring(pos1 + "\"update_date\": \"".length(), pos2);
+	
+  pos1 = s.indexOf("\"name\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
-
-    pos1 = s.indexOf("\"category\":", n);
+  name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
+  
+  pos1 = s.indexOf("\"category\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    category[i] = s.substring(pos1 + "\"category\": \"".length(), pos2);
+  category[i] = s.substring(pos1 + "\"category\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"pc\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    pc[i] = s.substring(pos1 + "\"pc\":".length(), pos2);
+  pc[i] = s.substring(pos1 + "\"pc\":".length(), pos2);
 
 	pos1 = s.indexOf("\"mobile\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("}", n);
-    mobile[i] = s.substring(pos1 + "\"mobile\":".length(), pos2);
+  mobile[i] = s.substring(pos1 + "\"mobile\":".length(), pos2);
 
 	pos1 = s.indexOf("\"shop_image1\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    shop_image1[i] = s.substring(pos1 + "\"shop_image1\": \"".length(), pos2);
+  shop_image1[i] = s.substring(pos1 + "\"shop_image1\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"opentime\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    opentime[i] = s.substring(pos1 + "\"opentime\": \"".length(), pos2);
-    opentime[i] = opentime[i].replace("\\n", "<br>");
+  opentime[i] = s.substring(pos1 + "\"opentime\": \"".length(), pos2);
+  opentime[i] = opentime[i].replace("\\n", "<br>");
 
 	pos1 = s.indexOf("\"holiday\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    holiday[i] = s.substring(pos1 + "\"holiday\": \"".length(), pos2);
-    holiday[i] = holiday[i].replace("\\n", "&emsp;");
-
+  holiday[i] = s.substring(pos1 + "\"holiday\": \"".length(), pos2);
+  holiday[i] = holiday[i].replace("\\n", "&emsp;");
+  
 	pos1 = s.indexOf("\"line\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    line[i] = s.substring(pos1 + "\"line\": \"".length(), pos2);
+  line[i] = s.substring(pos1 + "\"line\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"station\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    station[i] = s.substring(pos1 + "\"station\": \"".length(), pos2);
+  station[i] = s.substring(pos1 + "\"station\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"station_exit\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    station_exit[i] = s.substring(pos1 + "\"station_exit\": \"".length(), pos2);
+  station_exit[i] = s.substring(pos1 + "\"station_exit\": \"".length(), pos2);
 
 	pos1 = s.indexOf("\"walk\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    walk[i] = s.substring(pos1 + "\"walk\": \"".length(), pos2);
-
-	pos1 = s.indexOf("\"budget\":", n);
+  walk[i] = s.substring(pos1 + "\"walk\": \"".length(), pos2);
+	
+  pos1 = s.indexOf("\"budget\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    budget[i] = s.substring(pos1 + "\"budget\": ".length(), pos2);
+  budget[i] = s.substring(pos1 + "\"budget\": ".length(), pos2);
     //ave[i] = Integer.parseInt(budget[i]);
 
 	pos1 = s.indexOf("\"mobile_site\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    mobile_site[i] = s.substring(pos1 + "\"mobile_site\":".length(), pos2);
+  mobile_site[i] = s.substring(pos1 + "\"mobile_site\":".length(), pos2);
 
 	pos1 = s.indexOf("\"mobile_coupon\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    mobile_coupon[i] = s.substring(pos1 + "\"mobile_coupon\":".length(), pos2);
+  mobile_coupon[i] = s.substring(pos1 + "\"mobile_coupon\":".length(), pos2);
 
-    pos1 = s.indexOf("\"pc_coupon\":", n);
-    n = pos1 + 1;
-    pos2 = s.indexOf("}", n);
-    pc_coupon[i] = s.substring(pos1 + "\"pc_coupon\":".length(), pos2);
+  pos1 = s.indexOf("\"pc_coupon\":", n);
+  n = pos1 + 1;
+  pos2 = s.indexOf("}", n);
+  pc_coupon[i] = s.substring(pos1 + "\"pc_coupon\":".length(), pos2);
 
-    cou++;
+  cou++;
 }
 %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>店舗一覧</title>
-    </head>
-    <body>
-    	ヒット件数：<%= allnum %>件<br>
-    	<% if (pages * 20 > allnum) { %>
-	       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
-	    <% } else {%>
-	       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
-	    <% } %>
-    	<% for (int i = 0; i < cou; i++) {%>
-	        <a href="shop.jsp"><h3><%= name[i] %></h3></a>
-	        <% if (!shop_image1[i].isEmpty()) { %>
-	        	<img src="<%= shop_image1[i] %>"><br>
-	        <% } else {%>
-	        	<img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"><br>
-	        <% } %>
-	        ＜店舗情報＞<br>
-	        カテゴリー：<%= category[i] %><br>
-	        平均予算：
-	        <% if (budget[i].length() < 3) { %>
-	        	<br>
-	        <% } else {%>
-	        	<%= budget[i] %>円<br>
-	        <% } %>
-	        営業時間：<br>
-	        	<%= opentime[i] %><br>
-	        休業日：<%= holiday[i] %><br>
-	        ＜アクセス＞
-	        <%= line[i] %><%= station[i] %><%= station_exit[i] %>
-	        <% if (walk[i].indexOf("車") == -1) { %>
-	        	から徒歩<%= walk[i] %>分<br>
-	        <% } else {%>
-	        	から<%= walk[i] %>分<br>
-	        <% } %>
-	        ＜最終更新日時＞<%= update_date[i] %><br>
-	        <br>
-    	<% } %>
-    	<% if (pages != 1) { %>
-    		<a href="shop-list.jsp?p=<%= pages - 1 %>"><%= pages - 1 %></a>
-    	<% } %>
-    	<% if (allnum % 20 == 0) { %>
-    		<% if (allnum / 20 >= pages + 1) { %>
-    			<a href="shop-list.jsp?p=<%= pages + 1 %>"><%= pages + 1 %></a>
-    		<% } %>
-    	<% } else { %>
-    		<% if ((allnum / 20) + 1 >= pages + 1) { %>
-    			<a href="shop-list.jsp?p=<%= pages + 1 %>"><%= pages + 1 %></a>
-    		<% } %>
-    	<% } %>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>店舗一覧</title>
+</head>
+
+<body>
+    ヒット件数：<%= allnum %>件<br>
+    <% if (pages * 20 > allnum) { %>
+    <%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
+    <% } else {%>
+    <%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
+    <% } %>
+    <% for (int i = 0; i < cou; i++) {%>
+    <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
+        <h3><%= name[i] %></h3>
+    </a>
+    <% if (!shop_image1[i].isEmpty()) { %>
+    <img src="<%= shop_image1[i] %>"><br>
+    <% } else {%>
+    <img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"><br>
+    <% } %>
+    ＜店舗情報＞<br>
+    カテゴリー：<%= category[i] %><br>
+    平均予算：
+    <% if (budget[i].length() < 3) { %>
+    <br>
+    <% } else {%>
+    <%= budget[i] %>円<br>
+    <% } %>
+    営業時間：<br>
+    <%= opentime[i] %><br>
+    休業日：<%= holiday[i] %><br>
+    ＜アクセス＞
+    <%= line[i] %><%= station[i] %><%= station_exit[i] %>
+    <% if (walk[i].indexOf("車") == -1) { %>
+    から徒歩<%= walk[i] %>分<br>
+    <% } else {%>
+    から<%= walk[i] %>分<br>
+    <% } %>
+    ＜最終更新日時＞<%= update_date[i] %><br>
+    <br>
+    <% } %>
+    <% if (pages != 1) { %>
+    <a href="shop-list.jsp?p=<%= pages - 1 +"&"+params %>"><%= pages - 1 %></a>
+    <% } %>
+    <% if (allnum % 20 == 0) { %>
+    <% if (allnum / 20 >= pages + 1) { %>
+    <a href="shop-list.jsp?p=<%= pages + 1 +"&"+params %>"><%= pages + 1 %></a>
+    <% } %>
+    <% } else { %>
+    <% if ((allnum / 20) + 1 >= pages + 1) { %>
+    <a href="shop-list.jsp?p=<%= pages + 1 +"&"+params %>"><%= pages + 1 %></a>
+    <% } %>
+    <% } %>
+</body>
+
 </html>
