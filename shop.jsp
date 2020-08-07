@@ -70,6 +70,14 @@ public class MyHttpClient {
 	con.disconnect();
     }
 }
+
+// 店舗写真がなければ別の写真を返す
+String checkImage(String image1, String image2) {
+    if (image1 != "") return image1;
+    else if (image2 != "") return image2;
+    else return "http://design-ec.com/d/e_others_50/m_e_others_500.jpg";
+}
+
 %>
 <%
 //リクエスト・レスポンスとも文字コードをUTF-8に
@@ -78,82 +86,79 @@ response.setCharacterEncoding("UTF-8");
 String url_ = "";
 String msg = ""; // 結果メッセージ
 String s = "";// bodyの内容
-String s1 = "";
 MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
-String shop = request.getParameter("u");
-String pref = request.getParameter("t");
-String lunch_ = request.getParameter("a");
-lunch_ = check(lunch_);
-String credit = request.getParameter("b");
-credit = check(credit);
-String take_out = request.getParameter("c");
-take_out = check(take_out);
-String parking = request.getParameter("d");
-parking = check(parking);
-String power = request.getParameter("e");
-power = check(power);
-String wifi = request.getParameter("f");
-wifi = check(wifi);
-String alleat = request.getParameter("g");
-alleat = check(alleat);
-String pet = request.getParameter("h");
-pet = check(pet);
-String delivery = request.getParameter("i");
-delivery = check(delivery);
-String ele_money = request.getParameter("j");
-ele_money = check(ele_money);
-String l_alleat = request.getParameter("k");
-l_alleat = check(l_alleat);
-String reservation = request.getParameter("l");
-reservation = check(reservation);
+int shopNumber = Integer.parseInt(request.getParameter("shopNumber"));
+int o_page = Integer.parseInt(request.getParameter("offset_page"));
+// String offset_page = request.getParameter("p");
+// if (offset_page == null) {
+// 	offset_page = "1";
+// }
+// int o_page = Integer.parseInt(offset_page);
+String shop = request.getParameter("name");
+String pref = request.getParameter("pref");
+String lunch_ = request.getParameter("lunch");
+String credit = request.getParameter("card");
+String take_out = request.getParameter("takeout");
+String parking = request.getParameter("parking");
+String power = request.getParameter("outret");
+String wifi = request.getParameter("wifi");
+String alleat = request.getParameter("buffet");
+String pet = request.getParameter("with_pet");
+String delivery = request.getParameter("deliverly");
+String ele_money = request.getParameter("e_money");
+String l_alleat= request.getParameter("lunch_buffet");
+String reservation = request.getParameter("web_reserve");
+
+String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
+
 // 結果格納する配列
-String id[] = new String[10];
-String update_date[] = new String[10];
-String name[] = new String[10];
-String name_kana[] = new String[10];
-String latitude[] = new String[10];
-String longitude[] = new String[10];
-String category[] = new String[10];
-String url[] = new String[10];
-String url_mobile[] = new String[10];
-String pc[] = new String[10];
-String mobile[] = new String[10];
-String shop_image1[] = new String[10];
-String shop_image2[] = new String[10];
-String qrcode[] = new String[10];
-String address[] = new String[10];
-String tel[] = new String[10];
-String tel_sub[] = new String[10];
-String fax[] = new String[10];
-String opentime[] = new String[10];
-String holiday[] = new String[10];
-String line[] = new String[10];
-String station[] = new String[10];
-String station_exit[] = new String[10];
-String walk[] = new String[10];
-String note[] = new String[10];
-String parking_lots[] = new String[10];
-String pr_short[] = new String[10];
-String pr_long[] = new String[10];
-String areacode[] = new String[10];
-String areaname[] = new String[10];
-String prefcode[] = new String[10];
-String prefname[] = new String[10];
-String areacode_s[] = new String[10];
-String areaname_s[] = new String[10];
-String category_code_l[] = new String[10]; //
-String category_name_l[] = new String[10]; //
-String category_code_s[] = new String[10]; //
-String category_name_s[] = new String[10]; //
-String budget[] = new String[10];
-String party[] = new String[10];
-String lunch[] = new String[10];
-String credit_card[] = new String[10];
-String e_money[] = new String[10];
-String mobile_site[] = new String[10];
-String mobile_coupon[] = new String[10];
-String pc_coupon[] = new String[10];
+String id[] = new String[20];
+String update_date[] = new String[20];
+String name[] = new String[20];
+String name_kana[] = new String[20];
+String latitude[] = new String[20];
+String longitude[] = new String[20];
+String category[] = new String[20];
+String url[] = new String[20];
+String url_mobile[] = new String[20];
+String pc[] = new String[20];
+String mobile[] = new String[20];
+String shop_image1[] = new String[20];
+String shop_image2[] = new String[20];
+String qrcode[] = new String[20];
+String address[] = new String[20];
+String tel[] = new String[20];
+String tel_sub[] = new String[20];
+String fax[] = new String[20];
+String opentime[] = new String[20];
+String holiday[] = new String[20];
+String line[] = new String[20];
+String station[] = new String[20];
+String station_exit[] = new String[20];
+String walk[] = new String[20];
+String note[] = new String[20];
+String parking_lots[] = new String[20];
+String pr_short[] = new String[20];
+String pr_long[] = new String[20];
+String areacode[] = new String[20];
+String areaname[] = new String[20];
+String prefcode[] = new String[20];
+String prefname[] = new String[20];
+String areacode_s[] = new String[20];
+String areaname_s[] = new String[20];
+String category_code_l[] = new String[20];
+String category_name_l[] = new String[20];
+String category_code_s[] = new String[20];
+String category_name_s[] = new String[20];
+String budget[] = new String[20];
+String party[] = new String[20];
+String lunch[] = new String[20];
+String credit_card[] = new String[20];
+String e_money[] = new String[20];
+String mobile_site[] = new String[20];
+String mobile_coupon[] = new String[20];
+String pc_coupon[] = new String[20];
 // その他
 int pos1 = 0;
 int pos2 = 0;
@@ -162,8 +167,12 @@ String count = ""; // 検索該当数
 String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
-url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
-if (url != null) {
+
+
+// url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&"+ params;
+url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + o_page + "&" + params;
+
+if (url_ != null) {
     try {
 	mhc = new MyHttpClient(url_);
 	mhc.doAccess();
@@ -180,205 +189,206 @@ if (url != null) {
 pos1 = s.indexOf("\"total_hit_count\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
-count += "該当件数：" + s.substring(pos1 + "\"total_hit_count\":".length(), pos2) + "件";
+count += "該当件数：" + s.substring(pos1 + "\"total_hit_count\": \"".length(), pos2-1)+ "件";
 pos1 = s.indexOf("\"hit_per_page\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
-pages += "総ページ数：" + s.substring(pos1 + "\"hit_per_page\":".length(), pos2);
+pages += "総ページ数：" + s.substring(pos1 + "\"hit_per_page\": \"".length(), pos2-1);
 pos1 = s.indexOf("\"page_offset\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
-page_num += "現在ページ：" + s.substring(pos1 + "\"page_offset\":".length(), pos2);
-for (int i = 0; i < 10; i++) {
+page_num += "現在ページ：" + s.substring(pos1 + "\"page_offset\": ".length(), pos2);
+for (int i = 0; i < 20; i++) {
 	pos1 = s.indexOf("\"id\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
 	if (n == -1) {
 		break;
 	}
-    id[i] = s.substring(pos1 + "\"id\":".length(), pos2);
+    id[i] = s.substring(pos1 + "\"id\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"update_date\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    update_date[i] = s.substring(pos1 + "\"update_date\":".length(), pos2);
+    update_date[i] = s.substring(pos1 + "\"update_date\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"name\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
+    name[i] = s.substring(pos1 + "\"name\": \" ".length(), pos2-1);
 	pos1 = s.indexOf("\"name_kana\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    name_kana[i] = s.substring(pos1 + "\"name_kana\": \"".length(), pos2);
+    name_kana[i] = s.substring(pos1 + "\"name_kana\": \" ".length(), pos2-1);
 	pos1 = s.indexOf("\"latitude\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    latitude[i] = s.substring(pos1 + "\"latitude\":".length(), pos2);
+    latitude[i] = s.substring(pos1 + "\"latitude\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"longitude\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    longitude[i] = s.substring(pos1 + "\"longitude\":".length(), pos2);
+    longitude[i] = s.substring(pos1 + "\"longitude\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"category\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    category[i] = s.substring(pos1 + "\"category\":".length(), pos2);
+    category[i] = s.substring(pos1 + "\"category\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"url\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    url[i] = s.substring(pos1 + "\"url\":".length(), pos2);
+    url[i] = s.substring(pos1 + "\"url\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"url_mobile\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    url_mobile[i] = s.substring(pos1 + "\"url_mobile\":".length(), pos2);
+    url_mobile[i] = s.substring(pos1 + "\"url_mobile\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"pc\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    pc[i] = s.substring(pos1 + "\"pc\":".length(), pos2);
+    pc[i] = s.substring(pos1 + "\"pc\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"mobile\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("}", n);
-    mobile[i] = s.substring(pos1 + "\"mobile\":".length(), pos2);
+    mobile[i] = s.substring(pos1 + "\"mobile\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"shop_image1\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    shop_image1[i] = s.substring(pos1 + "\"shop_image1\":".length(), pos2);
+    shop_image1[i] = s.substring(pos1 + "\"shop_image1\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"shop_image2\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    shop_image2[i] = s.substring(pos1 + "\"shop_image2\":".length(), pos2);
+    shop_image2[i] = s.substring(pos1 + "\"shop_image2\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"qrcode\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("}", n);
-    qrcode[i] = s.substring(pos1 + "\"qrcode\":".length(), pos2);
+    qrcode[i] = s.substring(pos1 + "\"qrcode\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"address\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    address[i] = s.substring(pos1 + "\"address\":".length(), pos2);
+    address[i] = s.substring(pos1 + "\"address\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"tel\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    tel[i] = s.substring(pos1 + "\"tel\":".length(), pos2);
+    tel[i] = s.substring(pos1 + "\"tel\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"tel_sub\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    tel_sub[i] = s.substring(pos1 + "\"tel_sub\":".length(), pos2);
+    tel_sub[i] = s.substring(pos1 + "\"tel_sub\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"fax\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    fax[i] = s.substring(pos1 + "\"fax\":".length(), pos2);
+    fax[i] = s.substring(pos1 + "\"fax\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"opentime\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    opentime[i] = s.substring(pos1 + "\"opentime\":".length(), pos2);
+    opentime[i] = s.substring(pos1 + "\"opentime\": \"".length(), pos2-1).replaceAll("\\\\n", "<br>");
 	pos1 = s.indexOf("\"holiday\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    holiday[i] = s.substring(pos1 + "\"holiday\":".length(), pos2);
+    holiday[i] = s.substring(pos1 + "\"holiday\": \"".length(), pos2-1).replaceAll("\\\\n", "<br>");
 	pos1 = s.indexOf("\"line\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    line[i] = s.substring(pos1 + "\"line\":".length(), pos2);
+    line[i] = s.substring(pos1 + "\"line\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"station\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    station[i] = s.substring(pos1 + "\"station\":".length(), pos2);
+    station[i] = s.substring(pos1 + "\"station\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"station_exit\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    station_exit[i] = s.substring(pos1 + "\"station_exit\":".length(), pos2);
+    station_exit[i] = s.substring(pos1 + "\"station_exit\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"walk\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    walk[i] = s.substring(pos1 + "\"walk\":".length(), pos2);
+    walk[i] = s.substring(pos1 + "\"walk\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"note\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("}", n);
-    note[i] = s.substring(pos1 + "\"note\":".length(), pos2);
+    note[i] = s.substring(pos1 + "\"note\": \"".length()+1, pos2);
 	pos1 = s.indexOf("\"parking_lots\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    parking_lots[i] = s.substring(pos1 + "\"parking_lots\":".length(), pos2);
+    parking_lots[i] = s.substring(pos1 + "\"parking_lots\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"pr_short\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    pr_short[i] = s.substring(pos1 + "\"pr_short\":".length(), pos2);
+    pr_short[i] = s.substring(pos1 + "\"pr_short\": \"".length(), pos2-1).replaceAll("\\\\n", "<br>");
 	pos1 = s.indexOf("\"pr_long\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("}", n);
-    pr_long[i] = s.substring(pos1 + "\"pr_long\":".length(), pos2);
+    pr_long[i] = s.substring(pos1 + "\"pr_long\": \"".length(), pos2-1).replaceAll("\\\\n", "<br>").replaceAll("\"", "");
 	pos1 = s.indexOf("\"areacode\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    areacode[i] = s.substring(pos1 + "\"areacode\":".length(), pos2);
+    areacode[i] = s.substring(pos1 + "\"areacode\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"areaname\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    areaname[i] = s.substring(pos1 + "\"areaname\":".length(), pos2);
+    areaname[i] = s.substring(pos1 + "\"areaname\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"prefcode\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    prefcode[i] = s.substring(pos1 + "\"prefcode\":".length(), pos2);
+    prefcode[i] = s.substring(pos1 + "\"prefcode\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"prefname\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    prefname[i] = s.substring(pos1 + "\"prefname\":".length(), pos2);
+    prefname[i] = s.substring(pos1 + "\"prefname\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"areacode_s\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    areacode_s[i] = s.substring(pos1 + "\"areacode_s\":".length(), pos2);
+    areacode_s[i] = s.substring(pos1 + "\"areacode_s\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"areaname_s\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    areaname_s[i] = s.substring(pos1 + "\"areaname_s\":".length(), pos2);
+    areaname_s[i] = s.substring(pos1 + "\"areaname_s\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"category_code_l\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    category_code_l[i] = s.substring(pos1 + "\"category_code_l\":".length(), pos2);
+    category_code_l[i] = s.substring(pos1 + "\"category_code_l\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"category_name_l\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    category_name_l[i] = s.substring(pos1 + "\"category_name_l\":".length(), pos2);
+    category_name_l[i] = s.substring(pos1 + "\"category_name_l\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"category_code_s\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    category_code_s[i] = s.substring(pos1 + "\"category_code_s\":".length(), pos2);
+    category_code_s[i] = s.substring(pos1 + "\"category_code_s\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"category_name_s\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    category_name_s[i] = s.substring(pos1 + "\"category_name_s\":".length(), pos2);
+    category_name_s[i] = s.substring(pos1 + "\"category_name_s\": \"".length(), pos2-1);
 	pos1 = s.indexOf("\"budget\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    budget[i] = s.substring(pos1 + "\"budget\":".length(), pos2);
+    budget[i] = s.substring(pos1 + "\"budget\": ".length(), pos2).replaceAll("\"", "");
 	pos1 = s.indexOf("\"party\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    party[i] = s.substring(pos1 + "\"party\":".length(), pos2);
+    party[i] = s.substring(pos1 + "\"party\": ".length(), pos2).replaceAll("\"", "");
 	pos1 = s.indexOf("\"lunch\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    lunch[i] = s.substring(pos1 + "\"lunch\":".length(), pos2);
+    lunch[i] = s.substring(pos1 + "\"lunch\": ".length(), pos2).replaceAll("\"", "");
 	pos1 = s.indexOf("\"credit_card\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
-    credit_card[i] = s.substring(pos1 + "\"credit_card\":".length(), pos2);
+	pos2 = s.indexOf("\",", n);
+    credit_card[i] = s.substring(pos1 + "\"credit_card\": \"".length(), pos2);
 	pos1 = s.indexOf("\"e_money\":", n);
 	n = pos1 + 1;
-	pos2 = s.indexOf(",", n);
-    e_money[i] = s.substring(pos1 + "\"e_money\":".length(), pos2);
+	pos2 = s.indexOf("\",", n);
+    e_money[i] = s.substring(pos1 + "\"e_money\": \"".length(), pos2);
 	pos1 = s.indexOf("\"mobile_site\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    mobile_site[i] = s.substring(pos1 + "\"mobile_site\":".length(), pos2);
+    mobile_site[i] = s.substring(pos1 + "\"mobile_site\": \"".length(), pos2);
 	pos1 = s.indexOf("\"mobile_coupon\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    mobile_coupon[i] = s.substring(pos1 + "\"mobile_coupon\":".length(), pos2);
+    mobile_coupon[i] = s.substring(pos1 + "\"mobile_coupon\": \"".length(), pos2);
     pos1 = s.indexOf("\"pc_coupon\":", n);
     n = pos1 + 1;
     pos2 = s.indexOf("}", n);
-    pc_coupon[i] = s.substring(pos1 + "\"pc_coupon\":".length(), pos2);
+    pc_coupon[i] = s.substring(pos1 + "\"pc_coupon\": \"".length(), pos2);
     cou++;
 }
+
 %>
 
 <!DOCTYPE html>
@@ -387,23 +397,79 @@ for (int i = 0; i < 10; i++) {
 <head>
     <meta charset="UTF-8">
     <title>店舗情報</title>
+    <style>
+        .img-name {
+            display: flex;
+        }
+
+        .shop-body {
+            display: flex;
+        }
+
+        .route-map {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
-    <%= msg %>
-    <!-- 後で写真や店舗名、説明分などはjavaの変数で置き換える -->
-    <div class="shop">
-        <!-- <img src="McDonalds.jpg" alt="店舗写真"> -->
-        <h3>店舗名</h3>
-        <p>マクドナルドは世界約100ヶ国以上あり、トレーニングセンターは各国にありますが、ハンバーガー大学(HU)は7ヶ国にしかありません。その一つが東京です。1971年日本のハンバーガー大学は銀座1号店のオープンより1ヶ月早くオープンしています。マクドナルドのピープルビジネスを物語るストーリ―として、我々がいつも日本のハンバーガー大学を語るときに真っ先に皆に伝えるストーリーです。日本では年間約10000人の受講者がハンバーガー大学を卒業しています。
-        </p>
-    </div>
 
-    <div>
-        <img width="200" height="200"
-            src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=35.68233286004894,139.76649043148458,35.685173782469064,139.76584670132092|color:0000ffff&width=200&height=200">
-    </div>
-    <!-- <div> //ユーザーの最寄り駅からの場合
+    <div class="shop">
+        <div class="img-name">
+            <img src="<%= checkImage(shop_image1[shopNumber], shop_image2[shopNumber]) %> " alt="店舗画像">
+            <div class="shop-name">
+                <h3 class="name"><%= name[shopNumber] %></h3>
+                <h5 class="kana"><%= name_kana[shopNumber] %></h5>
+            </div>
+        </div>
+        <div class="pr">
+            PR文
+            <p><%= pr_short[shopNumber] %></p>
+            <p><%= pr_long[shopNumber] %></p>
+        </div>
+        <div class="shop-body">
+
+            <div class="shop-details">
+                更新日時:<%= update_date[shopNumber] %><br>
+                カテゴリー：<%= category[shopNumber] %><br>
+                ＜ホームページ＞<br>
+                PC用：<%= url[shopNumber] %><br>
+                携帯用：<%= url_mobile[shopNumber] %><br>
+                ＜店舗情報＞<br>
+                住所：<%= address[shopNumber] %><br>
+                電話番号：<%= tel[shopNumber] %><br>
+                営業時間：<br><%= "  "+opentime[shopNumber] %><br>
+                休業日：<br><%= "  "+holiday[shopNumber] %><br>
+                駐車場台数：<%= parking_lots[shopNumber] %><br>
+                ＜アクセス＞<br>
+                最寄り駅：<%= line[shopNumber] %><%= station[shopNumber] %><%= station_exit[shopNumber] %><br>
+                徒歩：<%= walk[shopNumber] %>分<br>
+                備考：<%= note[shopNumber] %><br>
+                ＜支払情報＞<br>
+                平均予算：<%= budget[shopNumber] %><br>
+                ランチタイム平均予算：<%= lunch[shopNumber] %><br>
+                利用可能クレジット会社：<%= credit_card[shopNumber] %><br>
+                利用可能電子マネー：<%= e_money[shopNumber] %><br>
+                <% if (mobile_site[shopNumber] == "1") { %>
+                モバイルサイトあり<br>
+                <% } %>
+                <% if (mobile_coupon[shopNumber] == "1") { %>
+                モバイルクーポンあり<br>
+                <% } %>
+                <% if (pc_coupon[shopNumber] == "1") { %>
+                PCクーポンあり<br>
+                <% } %>
+                <br>
+            </div>
+
+            <div class="route">
+                <img class="route-map" width="200" height="200"
+                    src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=35.68233286004894,139.76649043148458,35.685173782469064,139.76584670132092|color:0000ffff&width=400&height=400">
+            </div>
+
+        </div>
+        <!-- <div> //ユーザーの最寄り駅からの場合
         <div>
             <h3>店舗までの経路を検索</h3>
             <form action="route.jsp" method="get">
