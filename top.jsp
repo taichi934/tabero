@@ -75,7 +75,7 @@
     <!--  marginは上、右、左、下 -->
     <h2>~飲食店検索アプリ~</h2>
     <h1>食べ路<br>tabero</h1>
-    <form action="shop-list.jsp" <%= request.getRequestURI() %> method="get">
+    <form action="shop-list.jsp" method="get">
 
         <p>キーワードから検索<br><input type="text" name="u" size="70"> <input type="submit" value="検索"><br></p>
         <div class="midasi1">
@@ -169,10 +169,6 @@
             </select><br><br>
         </div>
 
-
-
-
-
         <div class="abab">
             ランチ営業あり
             <input type="checkbox" name="a" value=1><br>
@@ -201,29 +197,29 @@
         </div>
     </form>
     <!--
-<a href = "shop-list.jsp" ><img src = "spa1.png" alt = "次へ"width="300" height="200" ></a>
-後に画像をいれます
-			<div id = "picture1">
-			<img src="" alt="サンプル" width="300" height="200" >
-			</div>
-			/*.abab {
-    padding: 0.5em 1em;
-    margin: 0 350px 0 500px;
-    background: #ffebe9;
-    border-top: solid 10px #ff7d6e;
-    text-align: left;
-	color: red;
-}
-.drop {
-    padding: 0.5em 1em;
-    margin: 0 0 0 200px;
-    background: #ffebe9;
-    border-top: solid 10px #ff7d6e;
-    text-align: left;
-	color: blue;
-	float: left;
-	}
--->
+    <a href = "shop-list.jsp" ><img src = "spa1.png" alt = "次へ"width="300" height="200" ></a>
+    後に画像をいれます
+          <div id = "picture1">
+          <img src="" alt="サンプル" width="300" height="200" >
+          </div>
+          /*.abab {
+        padding: 0.5em 1em;
+        margin: 0 350px 0 500px;
+        background: #ffebe9;
+        border-top: solid 10px #ff7d6e;
+        text-align: left;
+      color: red;
+    }
+    .drop {
+        padding: 0.5em 1em;
+        margin: 0 0 0 200px;
+        background: #ffebe9;
+        border-top: solid 10px #ff7d6e;
+        text-align: left;
+      color: blue;
+      float: left;
+      }
+    -->
 
     <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
         <img src="https://api.gnavi.co.jp/api/img/credit/api_90_35.gif" width="90" height="35" border="0"
