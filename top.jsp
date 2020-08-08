@@ -75,7 +75,7 @@
     <!--  marginは上、右、左、下 -->
     <h2>~飲食店検索アプリ~</h2>
     <h1>食べ路<br>tabero</h1>
-    <form action="shop-list.jsp" <%= request.getRequestURI() %> method="get">
+    <form action="shop-list.jsp" method="get">
 
         <p>キーワードから検索<br><input type="text" name="u" size="70"> <input type="submit" value="検索"><br></p>
         <div class="midasi1">
