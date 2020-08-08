@@ -13,58 +13,73 @@ String prettyPrintHTML(String s) {
     .replace("'", "&#39;")
     .replace("\n", "<br>\n");
 }
+
 String check (String s) {
 	if (s == null) {
 		s = "";
 	}
 	return s;
 }
+
 public class MyHttpClient {
     public String url = ""; /* URL */
     public String encoding = "UTF-8"; /* レスポンスの文字コード */
     public String header = ""; /* レスポンスヘッダ文字列 */
     public String body = ""; /* レスポンスボディ */
+
     // 2つの引数（URL，エンコーディング）をとるコンストラクタ
     public MyHttpClient(String url_, String encoding_) {
 	url = url_;
 	encoding = encoding_;
     }
-    // 1つの引数（URL）をとるコンストラクタ
-    public MyHttpClient(String url_) {
-	url = url_;
-    }
-    /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
-    public void doAccess()
-    throws MalformedURLException, ProtocolException, IOException {
+
+  // 1つの引数（URL）をとるコンストラクタ
+  public MyHttpClient(String url_) {
+	  url = url_;
+  }
+
+  /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
+  public void doAccess()
+  throws MalformedURLException, ProtocolException, IOException {
+
 	/* 接続準備 */
 	URL u = new URL(url);
 	HttpURLConnection con = (HttpURLConnection)u.openConnection();
 	con.setRequestMethod("GET");
 	con.setInstanceFollowRedirects(true);
+
 	/* 接続 */
 	con.connect();
+
 	/* レスポンスヘッダの獲得 */
 	Map<String, List<String>> headers = con.getHeaderFields();
 	StringBuilder sb = new StringBuilder();
 	Iterator<String> it = headers.keySet().iterator();
+
+
 	while (it.hasNext()) {
 	    String key = (String) it.next();
 	    sb.append("  " + key + ": " + headers.get(key) + "\n");
 	}
+
 	/* レスポンスコードとメッセージ */
 	sb.append("RESPONSE CODE [" + con.getResponseCode() + "]\n");
 	sb.append("RESPONSE MESSAGE [" + con.getResponseMessage() + "]\n");
+
 	header = sb.toString();
+
 	/* レスポンスボディの獲得 */
 	BufferedReader reader = new BufferedReader(
 	    new InputStreamReader(con.getInputStream(),
 		encoding));
 	String line;
 	sb = new StringBuilder();
+
 	while ((line = reader.readLine()) != null) {
 	    sb.append(line + "\n");
 	}
 	body = sb.toString();
+
 	/* 接続終了 */
 	reader.close();
 	con.disconnect();
@@ -75,10 +90,12 @@ public class MyHttpClient {
 //リクエスト・レスポンスとも文字コードをUTF-8に
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
+
 String url_ = "";
 String msg = ""; // 結果メッセージ
 String s = "";// bodyの内容
 MyHttpClient mhc; // HTTPで通信するためのインスタンス
+
 // パラメータ
 String shop = request.getParameter("u");
 if(shop == null) {
@@ -169,6 +186,7 @@ if(reservation == null) {
 }
 reservation = check(reservation);
 session.setAttribute("reservation", reservation);
+
 // 結果格納する配列
 String update_date[] = new String[20];
 String name[] = new String[20];
@@ -187,6 +205,7 @@ int ave[] = new int[20];
 String mobile_site[] = new String[20];
 String mobile_coupon[] = new String[20];
 String pc_coupon[] = new String[20];
+
 // その他
 int pos1 = 0;
 int pos2 = 0;
@@ -196,9 +215,7 @@ String page_num = ""; // 表示ページ
 int cou = 0;
 
 String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
-
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&" + params;
-
 
 if (url_ != null) {
     try {
@@ -213,6 +230,7 @@ if (url_ != null) {
 	msg += "何らかの不具合が発生しました。";
     }
 }
+
 // 結果格納
 pos1 = s.indexOf("\"total_hit_count\":", n);
 n = pos1 + 1;
@@ -223,6 +241,7 @@ pos1 = s.indexOf("\"page_offset\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
 page_num += s.substring(pos1 + "\"page_offset\":".length(), pos2) + "ページ目";
+
 for (int i = 0; i < 20; i++) {
 	pos1 = s.indexOf("\"update_date\":", n);
 	n = pos1 + 1;
@@ -230,71 +249,87 @@ for (int i = 0; i < 20; i++) {
 	if (n == 0) {
 		break;
 	}
-    update_date[i] = s.substring(pos1 + "\"update_date\": \"".length(), pos2);
-	pos1 = s.indexOf("\"name\":", n);
+  update_date[i] = s.substring(pos1 + "\"update_date\": \"".length(), pos2);
+	
+  pos1 = s.indexOf("\"name\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
-    pos1 = s.indexOf("\"category\":", n);
+  name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
+  
+  pos1 = s.indexOf("\"category\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    category[i] = s.substring(pos1 + "\"category\": \"".length(), pos2);
+  category[i] = s.substring(pos1 + "\"category\": \"".length(), pos2);
+
 	pos1 = s.indexOf("\"pc\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    pc[i] = s.substring(pos1 + "\"pc\":".length(), pos2);
+  pc[i] = s.substring(pos1 + "\"pc\":".length(), pos2);
+
 	pos1 = s.indexOf("\"mobile\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("}", n);
-    mobile[i] = s.substring(pos1 + "\"mobile\":".length(), pos2);
+  mobile[i] = s.substring(pos1 + "\"mobile\":".length(), pos2);
+
 	pos1 = s.indexOf("\"shop_image1\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    shop_image1[i] = s.substring(pos1 + "\"shop_image1\": \"".length(), pos2);
+  shop_image1[i] = s.substring(pos1 + "\"shop_image1\": \"".length(), pos2);
+
 	pos1 = s.indexOf("\"opentime\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    opentime[i] = s.substring(pos1 + "\"opentime\": \"".length(), pos2);
-    opentime[i] = opentime[i].replace("\\n", "<br>");
+  opentime[i] = s.substring(pos1 + "\"opentime\": \"".length(), pos2);
+  opentime[i] = opentime[i].replace("\\n", "<br>");
+
 	pos1 = s.indexOf("\"holiday\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    holiday[i] = s.substring(pos1 + "\"holiday\": \"".length(), pos2);
-    holiday[i] = holiday[i].replace("\\n", "&emsp;");
+  holiday[i] = s.substring(pos1 + "\"holiday\": \"".length(), pos2);
+  holiday[i] = holiday[i].replace("\\n", "&emsp;");
+  
 	pos1 = s.indexOf("\"line\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    line[i] = s.substring(pos1 + "\"line\": \"".length(), pos2);
+  line[i] = s.substring(pos1 + "\"line\": \"".length(), pos2);
+
 	pos1 = s.indexOf("\"station\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    station[i] = s.substring(pos1 + "\"station\": \"".length(), pos2);
+  station[i] = s.substring(pos1 + "\"station\": \"".length(), pos2);
+
 	pos1 = s.indexOf("\"station_exit\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    station_exit[i] = s.substring(pos1 + "\"station_exit\": \"".length(), pos2);
+  station_exit[i] = s.substring(pos1 + "\"station_exit\": \"".length(), pos2);
+
 	pos1 = s.indexOf("\"walk\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
-    walk[i] = s.substring(pos1 + "\"walk\": \"".length(), pos2);
-	pos1 = s.indexOf("\"budget\":", n);
+  walk[i] = s.substring(pos1 + "\"walk\": \"".length(), pos2);
+	
+  pos1 = s.indexOf("\"budget\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    budget[i] = s.substring(pos1 + "\"budget\": ".length(), pos2);
+  budget[i] = s.substring(pos1 + "\"budget\": ".length(), pos2);
     //ave[i] = Integer.parseInt(budget[i]);
+
 	pos1 = s.indexOf("\"mobile_site\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    mobile_site[i] = s.substring(pos1 + "\"mobile_site\":".length(), pos2);
+  mobile_site[i] = s.substring(pos1 + "\"mobile_site\":".length(), pos2);
+
 	pos1 = s.indexOf("\"mobile_coupon\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
-    mobile_coupon[i] = s.substring(pos1 + "\"mobile_coupon\":".length(), pos2);
-    pos1 = s.indexOf("\"pc_coupon\":", n);
-    n = pos1 + 1;
-    pos2 = s.indexOf("}", n);
-    pc_coupon[i] = s.substring(pos1 + "\"pc_coupon\":".length(), pos2);
-    cou++;
+  mobile_coupon[i] = s.substring(pos1 + "\"mobile_coupon\":".length(), pos2);
+
+  pos1 = s.indexOf("\"pc_coupon\":", n);
+  n = pos1 + 1;
+  pos2 = s.indexOf("}", n);
+  pc_coupon[i] = s.substring(pos1 + "\"pc_coupon\":".length(), pos2);
+
+  cou++;
 }
 %>
 <!DOCTYPE html>
