@@ -17,7 +17,7 @@
         }
 
         div {
-            text-alige: center;
+            text-align: center;
             color: #43FF6B;
         }
 
@@ -26,7 +26,7 @@
             color: red;
             font-family: fantasy;
             font-size: 7em;
-            text-align: right;
+            text-align: center;
             background-color: white;
             background-image: url(wasyoku1.jpg);
             background-size: contain;
