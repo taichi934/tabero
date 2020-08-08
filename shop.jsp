@@ -159,6 +159,11 @@ String e_money[] = new String[20];
 String mobile_site[] = new String[20];
 String mobile_coupon[] = new String[20];
 String pc_coupon[] = new String[20];
+double lati[] = new double[20];
+double longi[] = new double[20];
+double ido;
+double keido;
+
 // その他
 int pos1 = 0;
 int pos2 = 0;
@@ -222,10 +227,12 @@ for (int i = 0; i < 20; i++) {
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
     latitude[i] = s.substring(pos1 + "\"latitude\": \"".length(), pos2-1);
+    lati[i] = Double.parseDouble(latitude[i]);
 	pos1 = s.indexOf("\"longitude\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
     longitude[i] = s.substring(pos1 + "\"longitude\": \"".length(), pos2-1);
+    longi[i] = Double.parseDouble(longitude[i]);
 	pos1 = s.indexOf("\"category\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
@@ -389,6 +396,30 @@ for (int i = 0; i < 20; i++) {
     cou++;
 }
 
+url_ = "http://express.heartrails.com/api/json?method=getStations&x=" + longi[shopNumber] + "&y=" + lati[shopNumber];
+
+if (url_ != null) {
+    try {
+	mhc = new MyHttpClient(url_);
+	mhc.doAccess();
+	s += mhc.body;
+    } catch(MalformedURLException e) {
+	msg += "URLが不適切です。";
+    } catch(ProtocolException e) {
+	msg += "HTTPの通信に失敗しました。";
+    } catch(IOException e) {
+	msg += "何らかの不具合が発生しました。";
+    }
+}
+
+pos1 = s.indexOf("\"x\":");
+n = pos1 + 1;
+pos2 = s.indexOf(",", n);
+keido = Double.parseDouble(s.substring(pos1 + "\"x\":".length(), pos2));
+pos1 = s.indexOf("\"y\":", n);
+n = pos1 + 1;
+pos2 = s.indexOf(",", n);
+ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 %>
 
 <!DOCTYPE html>
@@ -407,8 +438,8 @@ for (int i = 0; i < 20; i++) {
         }
 
         .route-map {
-            width: 100%;
-            height: auto;
+            width: 200px;
+            height: 200px;
         }
     </style>
 </head>
@@ -431,6 +462,8 @@ for (int i = 0; i < 20; i++) {
         <div class="shop-body">
 
             <div class="shop-details">
+            <%= lati[shopNumber] %><br>
+            <%= longi[shopNumber] %><br>
                 更新日時:<%= update_date[shopNumber] %><br>
                 カテゴリー：<%= category[shopNumber] %><br>
                 ＜ホームページ＞<br>
@@ -465,7 +498,7 @@ for (int i = 0; i < 20; i++) {
 
             <div class="route">
                 <img class="route-map" width="200" height="200"
-                    src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=35.68233286004894,139.76649043148458,35.685173782469064,139.76584670132092|color:0000ffff&width=400&height=400">
+                    src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=<%= lati[shopNumber] %>0000000000,<%= longi[shopNumber] %>00000000000,<%= ido %>0000000000,<%= keido %>0000000000|color:0000ffff&width=400&height=400">
             </div>
 
         </div>
