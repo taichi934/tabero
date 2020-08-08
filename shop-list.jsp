@@ -245,12 +245,12 @@ for (int i = 0; i < 20; i++) {
 		break;
 	}
   update_date[i] = s.substring(pos1 + "\"update_date\": \"".length(), pos2);
-	
+
   pos1 = s.indexOf("\"name\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
   name[i] = s.substring(pos1 + "\"name\": \"".length(), pos2);
-  
+
   pos1 = s.indexOf("\"category\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
@@ -272,7 +272,7 @@ for (int i = 0; i < 20; i++) {
 	pos2 = s.indexOf("\",", n);
   holiday[i] = s.substring(pos1 + "\"holiday\": \"".length(), pos2);
   holiday[i] = holiday[i].replace("\\n", "&emsp;");
-  
+
 	pos1 = s.indexOf("\"line\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
@@ -292,7 +292,7 @@ for (int i = 0; i < 20; i++) {
 	n = pos1 + 1;
 	pos2 = s.indexOf("\",", n);
   walk[i] = s.substring(pos1 + "\"walk\": \"".length(), pos2);
-	
+
   pos1 = s.indexOf("\"budget\":", n);
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
@@ -411,7 +411,7 @@ for (int i = 0; i < 20; i++) {
     		<% } %>
     	<% } else { %>
     		<% if ((allnum / 20) + 1 >= pages + 1) { %>
-    			<a href=<a href="shop-list.jsp?p=<%= pages + 1 +"&"+params %>" class="next"><%= pages + 1 %></a>
+    			<a href="shop-list.jsp?p=<%= pages + 1 +"&"+params %>" class="next"><%= pages + 1 %></a>
     		<% } %>
     	<% } %>
     </body>
