@@ -90,7 +90,7 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
 int shopNumber = Integer.parseInt(request.getParameter("shopNumber"));
 int o_page = Integer.parseInt(request.getParameter("offset_page"));
-String free = request.getParameter("freeword")
+String free = request.getParameter("freeword");
 String shop = request.getParameter("name");
 String pref = request.getParameter("pref");
 String janru = request.getParameter("category_l");
