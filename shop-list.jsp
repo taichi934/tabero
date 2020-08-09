@@ -211,6 +211,8 @@ int cou = 0;
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&" + params;
 session.setAttribute("url_", url_);
+
+
 if (url_ != null) {
     try {
 	mhc = new MyHttpClient(url_);
@@ -434,4 +436,139 @@ for (int i = 0; i < 20; i++) {
 	<% } %>
 </body>
 
+			img {
+				width: 260px;
+				height: 260px;
+				float: right;
+			}
+
+			.none {
+				display: none;
+			}
+        </style>
+    </head>
+    <body>
+    	<form action= "shop-list.jsp" method="post">
+    	<input type="text" name="u" size="50" >
+		<select name = "t" >
+	        <option value="" selected>都道府県</option>
+			<option value="PREF01">北海道</option>
+			<option value="PREF02">青森県</option>
+			<option value="PREF03">岩手県</option>
+			<option value="PREF04">宮城県</option>
+			<option value="PREF05">秋田県</option>
+			<option value="PREF06">山形県</option>
+			<option value="PREF07">福島県</option>
+			<option value="PREF08">茨城県</option>
+			<option value="PREF09">栃木県</option>
+			<option value="PREF10">群馬県</option>
+			<option value="PREF11">埼玉県</option>
+			<option value="PREF12">千葉県</option>
+			<option value="PREF13">東京都</option>
+			<option value="PREF14">神奈川県</option>
+			<option value="PREF15">新潟県</option>
+			<option value="PREF16">富山県</option>
+			<option value="PREF17">石川県</option>
+			<option value="PREF18">福井県</option>
+			<option value="PREF19">山梨県</option>
+			<option value="PREF20">長野県</option>
+			<option value="PREF21">岐阜県</option>
+			<option value="PREF22">静岡県</option>
+			<option value="PREF23">愛知県</option>
+			<option value="PREF24">三重県</option>
+			<option value="PREF25">滋賀県</option>
+			<option value="PREF26">京都府</option>
+			<option value="PREF27">大阪府</option>
+			<option value="PREF28">兵庫県</option>
+			<option value="PREF29">奈良県</option>
+			<option value="PREF30">和歌山県</option>
+			<option value="PREF31">鳥取県</option>
+			<option value="PREF32">島根県</option>
+			<option value="PREF33">岡山県</option>
+			<option value="PREF34">広島県</option>
+			<option value="PREF35">山口県</option>
+			<option value="PREF36">徳島県</option>
+			<option value="PREF37">香川県</option>
+			<option value="PREF38">愛媛県</option>
+			<option value="PREF39">高知県</option>
+			<option value="PREF40">福岡県</option>
+			<option value="PREF41">佐賀県</option>
+			<option value="PREF42">長崎県</option>
+			<option value="PREF43">熊本県</option>
+			<option value="PREF44">大分県</option>
+			<option value="PREF45">宮崎県</option>
+			<option value="PREF46">鹿児島県</option>
+			<option value="PREF47">沖縄県</option>
+		</select>
+		<div class = "none">
+			<input type = "checkbox" name = "a" value = 0 checked="checked">
+			<input type = "checkbox" name = "b" value = 0 checked="checked">
+			<input type = "checkbox" name = "c" value = 0 checked="checked">
+			<input type = "checkbox" name = "d" value = 0 checked="checked">
+			<input type = "checkbox" name = "e" value = 0 checked="checked">
+			<input type = "checkbox" name = "f" value = 0 checked="checked">
+			<input type = "checkbox" name = "g" value = 0 checked="checked">
+			<input type = "checkbox" name = "h" value = 0 checked="checked">
+			<input type = "checkbox" name = "i" value = 0 checked="checked">
+			<input type = "checkbox" name = "j" value = 0 checked="checked">
+			<input type = "checkbox" name = "k" value = 0 checked="checked">
+			<input type = "checkbox" name = "l" value = 0 checked="checked">>
+		</div>
+		<input type="submit" value = "検索"><br>
+		<h1>店舗一覧</h1>
+    	<div class = "page">
+	    	ヒット件数：<%= allnum %>件<br>
+	    	<% if (pages * 20 > allnum) { %>
+		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
+		    <% } else {%>
+		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
+		    <% } %>
+	    </div>
+	    <br>
+    	<% for (int i = 0; i < cou; i++) {%>
+    		<div class = "info">
+		        <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages %>">
+		        	<h2><%= name[i] %></h2>
+		        </a>
+		        <% if (!shop_image1[i].isEmpty()) { %>
+		        	<div style="text-align: right"><img src="<%= shop_image1[i] %>"></div><br>
+		        <% } else {%>
+		        	<div style="text-align: right"><img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"></div><br>
+		        <% } %>
+		        ＜店舗情報＞<br>
+		        カテゴリー：<%= category[i] %><br>
+		        平均予算：
+		        <% if (budget[i].length() < 3) { %>
+		        	<br>
+		        <% } else {%>
+		        	<%= budget[i] %>円<br>
+		        <% } %>
+		        営業時間：<br>
+		        	<%= opentime[i] %><br>
+		        休業日：<%= holiday[i] %><br><br>
+		        ＜アクセス＞
+		        <%= line[i] %><%= station[i] %><%= station_exit[i] %>
+		        <% if (walk[i].indexOf("車") == -1) { %>
+		        	から徒歩<%= walk[i] %>分<br><br>
+		        <% } else {%>
+		        	から<%= walk[i] %>分<br><br>
+		        <% } %>
+		        ＜最終更新日時＞<%= update_date[i] %><br>
+	        </div>
+	        <br><br><br>
+    	<% } %>
+    	<a href="top.jsp" class="back">検索条件へ戻る</a>
+    	<% if (pages != 1) { %>
+    		<a href="shop-list.jsp?p=<%= pages - 1 %>" class="back"><%= pages - 1 %></a>
+    	<% } %>
+    	<% if (allnum % 20 == 0) { %>
+    		<% if (allnum / 20 >= pages + 1) { %>
+    			<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
+    		<% } %>
+    	<% } else { %>
+    		<% if ((allnum / 20) + 1 >= pages + 1) { %>
+    			<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
+    		<% } %>
+    	<% } %>
+    </body>
 </html>
