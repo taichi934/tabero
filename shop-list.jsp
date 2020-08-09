@@ -275,8 +275,6 @@ for (int i = 0; i < 20; i++) {
 			text-align: right;
 		}
 
-		.b_page {}
-
 		.back {
 			border: 2px solid #ffa042;
 			border-radius: 5px;
