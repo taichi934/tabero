@@ -426,92 +426,180 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>店舗情報</title>
-    <style>
-        .img-name {
-            display: flex;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>店舗情報</title>
+  <style>
+    body {
+      background-color: #FFF5EE;
+    }
 
-        .shop-body {
-            display: flex;
-        }
+    .shop-upper {
+      display: flex;
+    }
 
-        .route-map {
-            width: 200px;
-            height: 200px;
-        }
-    </style>
+    .shop-upper div {
+      margin-left: 30px;
+    }
+
+    .shop-name .genre {
+      margin-top: 30px;
+      padding-bottom: 0px;
+      margin-bottom: 0px;
+    }
+
+    .shop-name .name {
+      font-size: 40px;
+      padding-top: 10px;
+      margin-top: 0px;
+      padding-bottom: 0px;
+      margin-bottom: 0px;
+    }
+
+    .shop-name .kana {
+      margin-top: 0px;
+      padding-top: 10px;
+      margin-left: 15px;
+    }
+
+    .shop-body>div {
+      margin-left: 30px;
+    }
+
+    .shop-details h4 {
+      margin-bottom: 0px;
+    }
+
+    .details {
+      margin-left: 30px;
+    }
+
+    .access {
+      display: flex;
+    }
+
+    .access h4 {
+      margin-bottom: 0px;
+    }
+
+    .access-info {
+      margin-top: 30px;
+      margin-left: 30px;
+    }
+
+    .back-btn {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .back {
+      border: 2px solid #ffa042;
+      border-radius: 5px;
+      background-color: #FFFFE0;
+      padding: 10px;
+      text-align: center;
+      color: #000000;
+      width: 150px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="shop">
-        <div class="img-name">
-            <img src="<%= checkImage(shop_image1[shopNumber], shop_image2[shopNumber]) %> " alt="店舗画像">
-            <div class="shop-name">
-                <h3 class="name"><%= name[shopNumber] %></h3>
-                <h5 class="kana"><%= name_kana[shopNumber] %></h5>
-            </div>
-        </div>
-        <div class="pr">
-            PR文
-            <p><%= pr_short[shopNumber] %></p>
-            <p><%= pr_long[shopNumber] %></p>
-        </div>
-        <div class="shop-body">
+  <div class="shop">
+    <div class="shop-upper">
+      <div class="img">
+        <img src="<%= checkImage(shop_image1[shopNumber], shop_image2[shopNumber]) %> " alt="店舗画像">
+      </div>
+      <div class="shop-name">
+        <h4 class="genre"><%= category[shopNumber] %></h4>
+        <h1 class="name"><%= name[shopNumber] %></h1>
+        <h5 class="kana"><%= name_kana[shopNumber] %></h5>
+      </div>
+    </div>
 
-            <div class="shop-details">
-            <%= lati[shopNumber] %><br>
-            <%= longi[shopNumber] %><br>
-                更新日時:<%= update_date[shopNumber] %><br>
-                カテゴリー：<%= category[shopNumber] %><br>
-                ＜ホームページ＞<br>
-                PC用：<%= url[shopNumber] %><br>
-                携帯用：<%= url_mobile[shopNumber] %><br>
-                ＜店舗情報＞<br>
-                住所：<%= address[shopNumber] %><br>
-                電話番号：<%= tel[shopNumber] %><br>
-                営業時間：<br><%= "  "+opentime[shopNumber] %><br>
-                休業日：<br><%= "  "+holiday[shopNumber] %><br>
-                駐車場台数：<%= parking_lots[shopNumber] %><br>
-                ＜アクセス＞<br>
-                最寄り駅：<%= line[shopNumber] %><%= station[shopNumber] %><%= station_exit[shopNumber] %><br>
-                徒歩：<%= walk[shopNumber] %>分<br>
-                備考：<%= note[shopNumber] %><br>
-                ＜支払情報＞<br>
-                平均予算：<%= budget[shopNumber] %><br>
-                ランチタイム平均予算：<%= lunch[shopNumber] %><br>
-                利用可能クレジット会社：<%= credit_card[shopNumber] %><br>
-                利用可能電子マネー：<%= e_money[shopNumber] %><br>
-                <% if (mobile_site[shopNumber] == "1") { %>
-                モバイルサイトあり<br>
-                <% } %>
-                <% if (mobile_coupon[shopNumber] == "1") { %>
-                モバイルクーポンあり<br>
-                <% } %>
-                <% if (pc_coupon[shopNumber] == "1") { %>
-                PCクーポンあり<br>
-                <% } %>
-                <br>
-            </div>
+    <hr>
 
-            <div class="route">
-                <img class="route-map" width="200" height="200"
-                    src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=<%= lati[shopNumber] %>0000000000,<%= longi[shopNumber] %>00000000000,<%= ido %>0000000000,<%= keido %>0000000000|color:0000ffff&width=400&height=400">
-            </div>
+    <div class="shop-body">
+      <div class="pr">
+        <h4><%= pr_short[shopNumber] %></h4>
+        <p><%= pr_long[shopNumber] %></p>
+      </div>
+      <hr>
+      <div class="shop-details">
+        <div class="info">
+          <h4>＜店舗情報＞</h4>
+          <div class="details">
+            住所：<%= address[shopNumber] %><br>
+            電話番号：<%= tel[shopNumber] %><br>
+            営業時間：<br>
+            <%= opentime[shopNumber] %><br>
+            休業日：<br>
+            <%= holiday[shopNumber] %><br>
+            駐車場台数：<%= parking_lots[shopNumber] %><br>
+          </div>
+        </div>
+        <div class="payment">
+          <h4>＜支払情報＞</h4>
+          <div class="details">
+            平均予算：<%= budget[shopNumber] %><br>
+            ランチタイム平均予算：<%= lunch[shopNumber] %><br>
+            利用可能クレジット会社：<%= credit_card[shopNumber] %><br>
+            利用可能電子マネー：<%= e_money[shopNumber] %><br>
+          </div>
+        </div>
+        <div class="website">
+          <h4>＜ホームページ＞</h4>
+          <div class="details">
+            <a href="<%= url[shopNumber] %>">PC用サイトへ</a><br>
+            <a href="<%= url_mobile[shopNumber] %>">スマホ用サイトへ</a><br>
 
+            <% if (mobile_site[shopNumber] == "1") { %>
+            モバイルサイトあり<br>
+            <% } %>
+            <% if (mobile_coupon[shopNumber] == "1") { %>
+            モバイルクーポンあり<br>
+            <% } %>
+            <% if (pc_coupon[shopNumber] == "1") { %>
+            PCクーポンあり<br>
+            <% } %>
+          </div>
         </div>
-        <!-- <div> //ユーザーの最寄り駅からの場合
-        <div>
-            <h3>店舗までの経路を検索</h3>
-            <form action="route.jsp" method="get">
-                <label for="nearest">最寄り駅</label>
-                <input type="text" name="station" id="nearest" size="20" placeholder="渋谷駅">
-                <button type="submit">経路を検索</button>
-            </form>
+        <br>
+        更新日時:<%= update_date[shopNumber] %>
+      </div>
+      <hr>
+      <div class="access">
+        <div class="route">
+          <img class="route-map"
+            src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=<%= lati[shopNumber] %>0000000000,<%= longi[shopNumber] %>00000000000,<%= ido %>0000000000,<%= keido %>0000000000|color:0000ffff&width=500&height=500">
         </div>
-    </div> -->
+        <div class="access-info">
+          <h4>＜アクセス＞</h4>
+          <div class="details">
+            最寄り駅：<%= line[shopNumber] %><%= station[shopNumber] %><%= station_exit[shopNumber] %><br>
+            徒歩：<%= walk[shopNumber] %>分<br>
+            備考：<%= note[shopNumber] %><br>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="back-btn">
+        <a class="back" href="<%= "shop-list.jsp?p=" + o_page + "&" + newParams %>">検索結果に戻る</a>
+      </div>
+
+    </div>
+    <!-- <div> //ユーザーの最寄り駅からの場合
+			<div>
+				<h3>店舗までの経路を検索</h3>
+				<form action="route.jsp" method="get">
+					<label for="nearest">最寄り駅</label>
+					<input type="text" name="station" id="nearest" size="20" placeholder="渋谷駅">
+					<button type="submit">経路を検索</button>
+				</form>
+			</div>
+		</div> -->
+
 </body>
 
 </html>
