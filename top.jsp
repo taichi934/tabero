@@ -315,12 +315,12 @@
 	                <select name="var" class="cp_sl06">
 	                    <option value="" selected>何食べたい？（ジャンル）</option>
 
-	                    <option value="RSFST9000">居酒屋</option>
-	                    <option value="RSFST2000">日本料理・郷土料理</option>
-	                    <option value="RSFST3000">寿司・魚料理・シーフード</option>
-	                    <option value="RSFST4000">鍋</option>
-	                    <option value="RSFST5000">焼肉・ホルモン</option>
-	                    <option value="RSFST6000">焼き鳥・肉料理・串料理</option>
+	                    <option value="RSFST09000">居酒屋</option>
+	                    <option value="RSFST02000">日本料理・郷土料理</option>
+	                    <option value="RSFST03000">寿司・魚料理・シーフード</option>
+	                    <option value="RSFST04000">鍋</option>
+	                    <option value="RSFST05000">焼肉・ホルモン</option>
+	                    <option value="RSFST06000">焼き鳥・肉料理・串料理</option>
 	                    <option value="RSFST01000">和食</option>
 	                    <option value="RSFST07000">お好み焼き・粉もの</option>
 	                    <option value="RSFST08000">ラーメン・麺料理</option>
