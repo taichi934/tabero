@@ -38,16 +38,16 @@ public class MyHttpClient {
   /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
   public void doAccess()
   throws MalformedURLException, ProtocolException, IOException {
-  
+
     /* 接続準備 */
     URL u = new URL(url);
     HttpURLConnection con = (HttpURLConnection)u.openConnection();
     con.setRequestMethod("GET");
     con.setInstanceFollowRedirects(true);
-    
+
     /* 接続 */
     con.connect();
-    
+
     /* レスポンスヘッダの獲得 */
     Map<String, List<String>> headers = con.getHeaderFields();
     StringBuilder sb = new StringBuilder();
@@ -56,12 +56,12 @@ public class MyHttpClient {
       String key = (String) it.next();
       sb.append("  " + key + ": " + headers.get(key) + "\n");
     }
-    
+
     /* レスポンスコードとメッセージ */
     sb.append("RESPONSE CODE [" + con.getResponseCode() + "]\n");
     sb.append("RESPONSE MESSAGE [" + con.getResponseMessage() + "]\n");
     header = sb.toString();
-    
+
     /* レスポンスボディの獲得 */
     BufferedReader reader = new BufferedReader(
       new InputStreamReader(con.getInputStream(),
@@ -72,7 +72,7 @@ public class MyHttpClient {
       sb.append(line + "\n");
     }
     body = sb.toString();
-    
+
     /* 接続終了 */
     reader.close();
     con.disconnect();
@@ -423,182 +423,195 @@ pos1 = s.indexOf("\"y\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
 ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
+
+// shop-listで条件を引き継げるようにparams を修正
+String newParams = params.replace("freeword", "x")
+	.replace("name", "u")
+	.replace("category_l", "var")
+	.replace("sort", "so")
+	.replace("pref", "t")
+	.replace("lunch", "a")
+	.replace("card", "b")
+	.replace("takeout", "c")
+	.replace("parking", "d")
+	.replace("outret", "e")
+	.replace("wifi", "f")
+	.replace("buffet", "g")
+	.replace("with_pet", "h")
+	.replace("deliverly", "i")
+	.replace("e_money", "j")
+	.replace("lunch_buffet", "k")
+	.replace("web_reserve", "l");
 %>
 
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>店舗情報</title>
-	<style>
-		body {
-			background-color: #FFF5EE;
-		}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>店舗情報</title>
+  <style>
+    body {
+      background-color: #FFF5EE;
+    }
 
-		.shop-upper {
-			display: flex;
-		}
+    .shop-upper {
+      display: flex;
+    }
 
-		.shop-upper div {
-			margin-left: 30px;
-		}
+    .shop-upper div {
+      margin-left: 30px;
+    }
 
-		.shop-name .genre {
-			margin-top: 30px;
-			padding-bottom: 0px;
-			margin-bottom: 0px;
-		}
+    .shop-name .genre {
+      margin-top: 30px;
+      padding-bottom: 0px;
+      margin-bottom: 0px;
+    }
 
-		.shop-name .name {
-			font-size: 40px;
-			padding-top: 10px;
-			margin-top: 0px;
-			padding-bottom: 0px;
-			margin-bottom: 0px;
-		}
+    .shop-name .name {
+      font-size: 40px;
+      padding-top: 10px;
+      margin-top: 0px;
+      padding-bottom: 0px;
+      margin-bottom: 0px;
+    }
 
-		.shop-name .kana {
-			margin-top: 0px;
-			padding-top: 10px;
-			margin-left: 15px;
-		}
+    .shop-name .kana {
+      margin-top: 0px;
+      padding-top: 10px;
+      margin-left: 15px;
+    }
 
-		.shop-body>div {
-			margin-left: 30px;
-		}
+    .shop-body>div {
+      margin-left: 30px;
+    }
 
-		.shop-details h4 {
-			margin-bottom: 0px;
-		}
+    .shop-details h4 {
+      margin-bottom: 0px;
+    }
 
-		.details {
-			margin-left: 30px;
-		}
+    .details {
+      margin-left: 30px;
+    }
 
-		.access {
-			display: flex;
-		}
+    .access {
+      display: flex;
+    }
 
-		.access h4 {
-			margin-bottom: 0px;
-		}
+    .access h4 {
+      margin-bottom: 0px;
+    }
 
-		.access-info {
-			margin-top: 30px;
-			margin-left: 30px;
-		}
+    .access-info {
+      margin-top: 30px;
+      margin-left: 30px;
+    }
 
-		.back-btn {
-			margin-top: 40px;
-			margin-bottom: 40px;
-		}
+    .back-btn {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
 
-		.back {
-			border: 2px solid #ffa042;
-			border-radius: 5px;
-			background-color: #FFFFE0;
-			padding: 10px;
-			text-align: center;
-			color: #000000;
-			width: 150px;
-		}
-	</style>
+    .back {
+      border: 2px solid #ffa042;
+      border-radius: 5px;
+      background-color: #FFFFE0;
+      padding: 10px;
+      text-align: center;
+      color: #000000;
+      width: 150px;
+    }
+  </style>
 </head>
 
 <body>
 
-	<div class="shop">
-		<div class="shop-upper">
-			<div class="img">
-				<img src="<%= checkImage(shop_image1[shopNumber], shop_image2[shopNumber]) %> " alt="店舗画像">
-			</div>
-			<div class="shop-name">
-				<h4 class="genre"><%= category[shopNumber] %></h4>
-				<h1 class="name"><%= name[shopNumber] %></h1>
-				<h5 class="kana"><%= name_kana[shopNumber] %></h5>
-			</div>
-		</div>
+  <div class="shop">
+    <div class="shop-upper">
+      <div class="img">
+        <img src="<%= checkImage(shop_image1[shopNumber], shop_image2[shopNumber]) %> " alt="店舗画像">
+      </div>
+      <div class="shop-name">
+        <h4 class="genre"><%= category[shopNumber] %></h4>
+        <h1 class="name"><%= name[shopNumber] %></h1>
+        <h5 class="kana"><%= name_kana[shopNumber] %></h5>
+      </div>
+    </div>
 
-		<hr>
+    <hr>
 
-		<div class="shop-body">
-			<div class="pr">
-				<h4><%= pr_short[shopNumber] %></h4>
-				<p><%= pr_long[shopNumber] %></p>
-			</div>
-			<hr>
-			<div class="shop-details">
-				<div class="info">
-					<h4>＜店舗情報＞</h4>
-					<div class="details">
-						住所：<%= address[shopNumber] %><br>
-						電話番号：<%= tel[shopNumber] %><br>
-						営業時間：<br>
-						<%= opentime[shopNumber] %><br>
-						休業日：<br>
-						<%= holiday[shopNumber] %><br>
-						駐車場台数：<%= parking_lots[shopNumber] %><br>
-					</div>
-				</div>
-				<div class="payment">
-					<h4>＜支払情報＞</h4>
-					<div class="details">
-						平均予算：<%= budget[shopNumber] %><br>
-						ランチタイム平均予算：<%= lunch[shopNumber] %><br>
-						利用可能クレジット会社：<%= credit_card[shopNumber] %><br>
-						利用可能電子マネー：<%= e_money[shopNumber] %><br>
-					</div>
-				</div>
-				<div class="website">
-					<h4>＜ホームページ＞</h4>
-					<div class="details">
-						<a href="<%= url[shopNumber] %>">PC用サイトへ</a><br>
-						<a href="<%= url_mobile[shopNumber] %>">スマホ用サイトへ</a><br>
+    <div class="shop-body">
+      <div class="pr">
+        <h4><%= pr_short[shopNumber] %></h4>
+        <p><%= pr_long[shopNumber] %></p>
+      </div>
+      <hr>
+      <div class="shop-details">
+        <div class="info">
+          <h4>＜店舗情報＞</h4>
+          <div class="details">
+            住所：<%= address[shopNumber] %><br>
+            電話番号：<%= tel[shopNumber] %><br>
+            営業時間：<br>
+            <%= opentime[shopNumber] %><br>
+            休業日：<br>
+            <%= holiday[shopNumber] %><br>
+            駐車場台数：<%= parking_lots[shopNumber] %><br>
+          </div>
+        </div>
+        <div class="payment">
+          <h4>＜支払情報＞</h4>
+          <div class="details">
+            平均予算：<%= budget[shopNumber] %><br>
+            ランチタイム平均予算：<%= lunch[shopNumber] %><br>
+            利用可能クレジット会社：<%= credit_card[shopNumber] %><br>
+            利用可能電子マネー：<%= e_money[shopNumber] %><br>
+          </div>
+        </div>
+        <div class="website">
+          <h4>＜ホームページ＞</h4>
+          <div class="details">
+            <a href="<%= url[shopNumber] %>">PC用サイトへ</a><br>
+            <a href="<%= url_mobile[shopNumber] %>">スマホ用サイトへ</a><br>
 
-						<% if (mobile_site[shopNumber] == "1") { %>
-						モバイルサイトあり<br>
-						<% } %>
-						<% if (mobile_coupon[shopNumber] == "1") { %>
-						モバイルクーポンあり<br>
-						<% } %>
-						<% if (pc_coupon[shopNumber] == "1") { %>
-						PCクーポンあり<br>
-						<% } %>
-					</div>
-				</div>
-				<br>
-				更新日時:<%= update_date[shopNumber] %>
-			</div>
-			<hr>
-			<div class="access">
-				<div class="route">
-					<img class="route-map"
-						src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=<%= lati[shopNumber] %>0000000000,<%= longi[shopNumber] %>00000000000,<%= ido %>0000000000,<%= keido %>0000000000|color:0000ffff&width=500&height=500">
-				</div>
-				<div class="access-info">
-					<h4>＜アクセス＞</h4>
-					<div class="details">
-						最寄り駅：<%= line[shopNumber] %><%= station[shopNumber] %><%= station_exit[shopNumber] %><br>
-						徒歩：<%= walk[shopNumber] %>分<br>
-						備考：<%= note[shopNumber] %><br>
-					</div>
-				</div>
-			</div>
-			<hr>
-			<div class="back-btn">
-				<a class="back" href="<%= "shop-list.jsp?offset_page=" + o_page + "&" + params %>">検索結果に戻る</a>
-			</div>
+            <% if (mobile_site[shopNumber] == "1") { %>
+            モバイルサイトあり<br>
+            <% } %>
+            <% if (mobile_coupon[shopNumber] == "1") { %>
+            モバイルクーポンあり<br>
+            <% } %>
+            <% if (pc_coupon[shopNumber] == "1") { %>
+            PCクーポンあり<br>
+            <% } %>
+          </div>
+        </div>
+        <br>
+        更新日時:<%= update_date[shopNumber] %>
+      </div>
+      <hr>
+      <div class="access">
+        <div class="route">
+          <img class="route-map"
+            src="https://map.yahooapis.jp/course/V1/routeMap?appid=dj00aiZpPUx3SzQ1a0JlNE52RiZzPWNvbnN1bWVyc2VjcmV0Jng9NzE-&route=<%= lati[shopNumber] %>0000000000,<%= longi[shopNumber] %>00000000000,<%= ido %>0000000000,<%= keido %>0000000000|color:0000ffff&width=500&height=500">
+        </div>
+        <div class="access-info">
+          <h4>＜アクセス＞</h4>
+          <div class="details">
+            最寄り駅：<%= line[shopNumber] %><%= station[shopNumber] %><%= station_exit[shopNumber] %><br>
+            徒歩：<%= walk[shopNumber] %>分<br>
+            備考：<%= note[shopNumber] %><br>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="back-btn">
+        <a class="back" href="<%= "shop-list.jsp?p=" + o_page + "&" + newParams %>">検索結果に戻る</a>
+      </div>
 
-			<hr>
-
-			<div class="back-btn">
-				<a class="back" href="<%= "shop-list.jsp?offset_page=" + o_page + "&" + params %>">検索結果に戻る</a>
-			</div>
-
-		</div>
-		<!-- <div> //ユーザーの最寄り駅からの場合
+    </div>
+    <!-- <div> //ユーザーの最寄り駅からの場合
 			<div>
 				<h3>店舗までの経路を検索</h3>
 				<form action="route.jsp" method="get">

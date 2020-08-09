@@ -71,6 +71,27 @@ public class MyHttpClient {
 	con.disconnect();
     }
 }
+
+String useSameParams(String p) {
+	String s = p.replace("freeword", "x")
+		.replace("name", "u")
+		.replace("category_l", "var")
+		.replace("sort", "so")
+		.replace("pref", "t")
+		.replace("lunch", "a")
+		.replace("card", "b")
+		.replace("takeout", "c")
+		.replace("parking", "d")
+		.replace("outret", "e")
+		.replace("wifi", "f")
+		.replace("buffet", "g")
+		.replace("with_pet", "h")
+		.replace("deliverly", "i")
+		.replace("e_money", "j")
+		.replace("lunch_buffet", "k")
+		.replace("web_reserve", "l");
+	return s;
+}
 %>
 <%
 //リクエスト・レスポンスとも文字コードをUTF-8に
@@ -80,6 +101,7 @@ String url_ = "";
 String msg = ""; // 結果メッセージ
 String s = "";// bodyの内容
 MyHttpClient mhc; // HTTPで通信するためのインスタンス
+
 // パラメータ
 String free = request.getParameter("x");
 free = check(free);
@@ -121,6 +143,7 @@ String l_alleat = request.getParameter("k");
 l_alleat = check(l_alleat);
 String reservation = request.getParameter("l");
 reservation = check(reservation);
+
 
 // 結果格納する配列
 String update_date[] = new String[20];
@@ -232,128 +255,128 @@ for (int i = 0; i < 20; i++) {
 %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>食べ路</title>
-        <style>
-			body {
-				background: #eeebe7;
-				text-align: center;
-			}
 
-			.info {
-				background: #FFF5EE;
-				box-shadow: 0 0 5px 1px #ccc;
-				overflow: hidden;
-			}
+<head>
+	<meta charset="UTF-8">
+	<title>食べ路</title>
+	<style>
+		body {
+			background: #eeebe7;
+			text-align: center;
+		}
 
-			.page_info {
-				text-align: right;
-			}
+		.info {
+			background: #FFF5EE;
+			box-shadow: 0 0 5px 1px #ccc;
+			overflow: hidden;
+		}
 
-			.b_page {
-			}
+		.page_info {
+			text-align: right;
+		}
 
-			.back {
-				border: 2px solid #ffa042;
-				border-radius: 5px;
-				background-color: #FFFFE0;
-				padding: 20px;
-				text-align: center;
-				color: #000000;
-				width: 150px;
-			}
+		.back {
+			border: 2px solid #ffa042;
+			border-radius: 5px;
+			background-color: #FFFFE0;
+			padding: 20px;
+			text-align: center;
+			color: #000000;
+			width: 150px;
+		}
 
-			.next {
-				border: 2px solid #ffa042;
-				border-radius: 5px;
-				background-color: #FFFFE0;
-				padding: 20px;
-				text-align: center;
-				color: #000000;
-				width: 150px;
-			}
+		.next {
+			border: 2px solid #ffa042;
+			border-radius: 5px;
+			background-color: #FFFFE0;
+			padding: 20px;
+			text-align: center;
+			color: #000000;
+			width: 150px;
+		}
 
-			h1 {
-				margin: 0 0 0 0;
-			  	color: red;
-			  	font-family : fantasy;
-			  	font-size : 8ex;
-			  	text-align: center;
-			    background-color: #FFF5EE;
-			}
+		h1 {
+			margin: 0 0 0 0;
+			color: red;
+			font-family: fantasy;
+			font-size: 8ex;
+			text-align: center;
+			background-color: #FFF5EE;
+		}
 
-			h2 {
-				text-align: center;
-			}
+		h2 {
+			text-align: center;
+		}
 
-			img {
-				width: 260px;
-				height: 260px;
-				float: right;
-			}
-        </style>
-    </head>
-    <body>
-		<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
-		<h1>店舗一覧</h1>
-	    <div class = "page_info">
-	    	<br>
-		   	ヒット件数：<%= allnum %>件<br>
-		   	<% if (pages * 20 > allnum) { %>
-		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
-		    <% } else {%>
-		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
-		    <% } %>
-		</div>
+		img {
+			width: 260px;
+			height: 260px;
+			float: right;
+		}
+	</style>
+</head>
+
+<body>
+	<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
+	<h1>店舗一覧</h1>
+	<div class="page_info">
 		<br>
-	    <% for (int i = 0; i < cou; i++) {%>
-	    	<div class = "info">
-		        <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
-		        	<h2><%= name[i] %></h2>
-		        </a>
-		        <% if (!shop_image1[i].isEmpty()) { %>
-		        	<div style="text-align: right"><img src="<%= shop_image1[i] %>"></div><br>
-		        <% } else {%>
-		        	<div style="text-align: right"><img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"></div><br>
-		        <% } %>
-		        ＜店舗情報＞<br>
-		        カテゴリー：<%= category[i] %><br>
-		       平均予算：
-		        <% if (budget[i].length() < 3) { %>
-		        	<br>
-		        <% } else {%>
-		        	<%= budget[i] %>円<br>
-		        <% } %>
-		        営業時間：<br>
-		        	<%= opentime[i] %><br>
-		        休業日：<%= holiday[i] %><br><br>
-		        ＜アクセス＞
-		        <%= line[i] %><%= station[i] %><%= station_exit[i] %>
+		ヒット件数：<%= allnum %>件<br>
+		<% if (pages * 20 > allnum) { %>
+		<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
+		<% } else {%>
+		<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
+		<% } %>
+	</div>
+	<br>
+	<% for (int i = 0; i < cou; i++) {%>
+	<div class="info">
+		<a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
+			<h2><%= name[i] %></h2>
+		</a>
+		<% if (!shop_image1[i].isEmpty()) { %>
+		<div style="text-align: right"><img src="<%= shop_image1[i] %>"></div><br>
+		<% } else {%>
+		<div style="text-align: right"><img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"></div><br>
+		<% } %>
+		＜店舗情報＞<br>
+		カテゴリー：<%= category[i] %><br>
+		平均予算：
+		<% if (budget[i].length() < 3) { %>
+		<br>
+		<% } else {%>
+		<%= budget[i] %>円<br>
+		<% } %>
+		営業時間：<br>
+		<%= opentime[i] %><br>
+		休業日：<%= holiday[i] %><br><br>
+		＜アクセス＞
+		<%= line[i] %><%= station[i] %><%= station_exit[i] %>
 
-		        <% if (walk[i].indexOf("車") > -1) { %>
-		        	から徒歩<%= walk[i] %>分<br><br>
-		        <% } else if (walk[i].length() > 0) {%>
-			        	から<%= walk[i] %>分<br><br>
-			    <% } else { %>
-			    	<br><br>
-		        <% } %>
-		        ＜最終更新日時＞<%= update_date[i] %><br>
-		       </div>
-		       <br><br><br>
-	    <% } %>
-	    <a href="top.jsp" class="back">検索条件へ戻る</a>
-	    <% if (pages != 1) { %>
-	    	<a href="shop-list.jsp?p=<%= pages - 1 %><%= "&" + params %>" class="back"><%= pages - 1 %></a>
-	    <% } %>
-	    <% if (allnum % 20 == 0) { %>
-	    	<% if (allnum / 20 >= pages + 1) { %>
-	    		<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&" + params %>" class="next"><%= pages + 1 %></a>
-	    	<% } %>
-	    <% } else { %>
-	    	<% if ((allnum / 20) + 1 >= pages + 1) { %>
-	    		<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&"+ params %>" class="next"><%= pages + 1 %></a>
-	    	<% } %>
-	    <% } %>
-    </body>
+		<% if (walk[i].indexOf("車") > -1) { %>
+		から徒歩<%= walk[i] %>分<br><br>
+		<% } else if (walk[i].length() > 0) {%>
+		から<%= walk[i] %>分<br><br>
+		<% } else { %>
+		<br><br>
+		<% } %>
+		＜最終更新日時＞<%= update_date[i] %><br>
+	</div>
+	<br><br><br>
+	<% } %>
+	<a href="top.jsp" class="back">検索条件へ戻る</a>
+	<% if (pages != 1) { %>
+	<a href="shop-list.jsp?p=<%= pages - 1 %><%= "&" + useSameParams(params) %>" class="back"><%= pages - 1 %></a>
+	<% } %>
+	<% if (allnum % 20 == 0) { %>
+	<% if (allnum / 20 >= pages + 1) { %>
+	<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&" + useSameParams(params) %>" class="next"><%= pages + 1 %></a>
+	<% } %>
+	<% } else { %>
+	<% if ((allnum / 20) + 1 >= pages + 1) { %>
+	<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&"+ useSameParams(params) %>" class="next"><%= pages + 1 %></a>
+	<% } %>
+	<% } %>
+</body>
+
 </html>
