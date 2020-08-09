@@ -4,7 +4,6 @@
 
 
 <html>
-
 <head>
     <title>
         食べ路
@@ -59,8 +58,6 @@
     color: blue;
   	}
 */
-
-
 
         .cp_ipselect {
             position: relative;
@@ -176,9 +173,16 @@
             /* 影 */
             background-size: contain;
             background-image: url(https://3.bp.blogspot.com/-xQNOYwWqg0c/UguJadClyhI/AAAAAAAAXa0/OkBpN_x_SNM/s800/nihonchizu.png);
-            /* 画像のURLを入れてください  */
             background-repeat: no-repeat;
             background-position: left;
+            height: 65%;
+        }
+
+        .mask {
+        	background: rgba(255,255,255,0.5);
+			height: 110%;
+			position: relative;
+			bottom: 16px;
         }
 
         .abab {
@@ -237,115 +241,117 @@
         <p>自由に検索（フリーワード検索）<br><input type="text" name="x" size="70" placeholder="(例)和食　和歌山　など"><br></p>
 
         <div class=kakomi-box>
-            <div class=subtitle>条件を絞って検索<br><br></div>
-            店舗名から検索<input type="text" name="u" size="70" placeholder="店舗名を入力してね"><br>
+        	<div class="mask">
+        		<div class=subtitle>条件を絞って検索<br><br></div>
+	            店舗名から検索<input type="text" name="u" size="70" placeholder="店舗名を入力してね"><br>
 
-            <div class="cp_ipselect">
-                <select name="t" class="cp_sl06">
-                    <option value="" selected>どこで食べる？（都道府県）</option>
-                    <optgroup label="北海道">
-                        <option value="PREF01">北海道</option>
-                    </optgroup>
-                    <optgroup label="東北">
-                        <option value="PREF02">青森県</option>
-                        <option value="PREF03">岩手県</option>
-                        <option value="PREF04">宮城県</option>
-                        <option value="PREF05">秋田県</option>
-                        <option value="PREF06">山形県</option>
-                        <option value="PREF07">福島県</option>
-                    </optgroup>
-                    <optgroup label="関東">
-                        <option value="PREF08">茨城県</option>
-                        <option value="PREF09">栃木県</option>
-                        <option value="PREF10">群馬県</option>
-                        <option value="PREF11">埼玉県</option>
-                        <option value="PREF12">千葉県</option>
-                        <option value="PREF13">東京都</option>
-                        <option value="PREF14">神奈川県</option>
-                    </optgroup>
-                    <optgroup label="中部">
-                        <option value="PREF15">新潟県</option>
-                        <option value="PREF16">富山県</option>
-                        <option value="PREF17">石川県</option>
-                        <option value="PREF18">福井県</option>
-                        <option value="PREF19">山梨県</option>
-                        <option value="PREF20">長野県</option>
-                        <option value="PREF21">岐阜県</option>
-                        <option value="PREF22">静岡県</option>
-                        <option value="PREF23">愛知県</option>
-                    </optgroup>
-                    <optgroup label="近畿">
-                        <option value="PREF24">三重県</option>
-                        <option value="PREF25">滋賀県</option>
-                        <option value="PREF26">京都府</option>
-                        <option value="PREF27">大阪府</option>
-                        <option value="PREF28">兵庫県</option>
-                        <option value="PREF29">奈良県</option>
-                        <option value="PREF30">和歌山県</option>
-                    </optgroup>
-                    <optgroup label="中国">
-                        <option value="PREF31">鳥取県</option>
-                        <option value="PREF32">島根県</option>
-                        <option value="PREF33">岡山県</option>
-                        <option value="PREF34">広島県</option>
-                        <option value="PREF35">山口県</option>
-                    </optgroup>
-                    <optgroup label="四国">
-                        <option value="PREF36">徳島県</option>
-                        <option value="PREF37">香川県</option>
-                        <option value="PREF38">愛媛県</option>
-                        <option value="PREF39">高知県</option>
-                    </optgroup>
-                    <optgroup label="九州">
-                        <option value="PREF40">福岡県</option>
-                        <option value="PREF41">佐賀県</option>
-                        <option value="PREF42">長崎県</option>
-                        <option value="PREF43">熊本県</option>
-                        <option value="PREF44">大分県</option>
-                        <option value="PREF45">宮崎県</option>
-                        <option value="PREF46">鹿児島県</option>
-                        <option value="PREF47">沖縄県</option>
-                    </optgroup>
-                </select>
-                <select name="var" class="cp_sl06">
-                    <option value="" selected>何食べたい？（ジャンル）</option>
+	            <div class="cp_ipselect">
+	                <select name="t" class="cp_sl06">
+	                    <option value="" selected>どこで食べる？（都道府県）</option>
+	                    <optgroup label="北海道">
+	                        <option value="PREF01">北海道</option>
+	                    </optgroup>
+	                    <optgroup label="東北">
+	                        <option value="PREF02">青森県</option>
+	                        <option value="PREF03">岩手県</option>
+	                        <option value="PREF04">宮城県</option>
+	                        <option value="PREF05">秋田県</option>
+	                        <option value="PREF06">山形県</option>
+	                        <option value="PREF07">福島県</option>
+	                    </optgroup>
+	                    <optgroup label="関東">
+	                        <option value="PREF08">茨城県</option>
+	                        <option value="PREF09">栃木県</option>
+	                        <option value="PREF10">群馬県</option>
+	                        <option value="PREF11">埼玉県</option>
+	                        <option value="PREF12">千葉県</option>
+	                        <option value="PREF13">東京都</option>
+	                        <option value="PREF14">神奈川県</option>
+	                    </optgroup>
+	                    <optgroup label="中部">
+	                        <option value="PREF15">新潟県</option>
+	                        <option value="PREF16">富山県</option>
+	                        <option value="PREF17">石川県</option>
+	                        <option value="PREF18">福井県</option>
+	                        <option value="PREF19">山梨県</option>
+	                        <option value="PREF20">長野県</option>
+	                        <option value="PREF21">岐阜県</option>
+	                        <option value="PREF22">静岡県</option>
+	                        <option value="PREF23">愛知県</option>
+	                    </optgroup>
+	                    <optgroup label="近畿">
+	                        <option value="PREF24">三重県</option>
+	                        <option value="PREF25">滋賀県</option>
+	                        <option value="PREF26">京都府</option>
+	                        <option value="PREF27">大阪府</option>
+	                        <option value="PREF28">兵庫県</option>
+	                        <option value="PREF29">奈良県</option>
+	                        <option value="PREF30">和歌山県</option>
+	                    </optgroup>
+	                    <optgroup label="中国">
+	                        <option value="PREF31">鳥取県</option>
+	                        <option value="PREF32">島根県</option>
+	                        <option value="PREF33">岡山県</option>
+	                        <option value="PREF34">広島県</option>
+	                        <option value="PREF35">山口県</option>
+	                    </optgroup>
+	                    <optgroup label="四国">
+	                        <option value="PREF36">徳島県</option>
+	                        <option value="PREF37">香川県</option>
+	                        <option value="PREF38">愛媛県</option>
+	                        <option value="PREF39">高知県</option>
+	                    </optgroup>
+	                    <optgroup label="九州">
+	                        <option value="PREF40">福岡県</option>
+	                        <option value="PREF41">佐賀県</option>
+	                        <option value="PREF42">長崎県</option>
+	                        <option value="PREF43">熊本県</option>
+	                        <option value="PREF44">大分県</option>
+	                        <option value="PREF45">宮崎県</option>
+	                        <option value="PREF46">鹿児島県</option>
+	                        <option value="PREF47">沖縄県</option>
+	                    </optgroup>
+	                </select>
+	                <select name="var" class="cp_sl06">
+	                    <option value="" selected>何食べたい？（ジャンル）</option>
 
-                    <option value="RSFST9000">居酒屋</option>
-                    <option value="RSFST2000">日本料理・郷土料理</option>
-                    <option value="RSFST3000">寿司・魚料理・シーフード</option>
-                    <option value="RSFST4000">鍋</option>
-                    <option value="RSFST5000">焼肉・ホルモン</option>
-                    <option value="RSFST6000">焼き鳥・肉料理・串料理</option>
-                    <option value="RSFST01000">和食</option>
-                    <option value="RSFST07000">お好み焼き・粉もの</option>
-                    <option value="RSFST08000">ラーメン・麺料理</option>
-                    <option value="RSFST14000">中華</option>
-                    <option value="RSFST11000">イタリアン・フレンチ</option>
-                    <option value="RSFST13000">洋食</option>
-                    <option value="RSFST12000">欧米・各国料理</option>
-                    <option value="RSFST16000">カレー</option>
-                    <option value="RSFST15000">アジア・エスニック料理</option>
-                    <option value="RSFST17000">オーガニック・創作料理</option>
-                    <option value="RSFST10000">ダイニングバー・バー・ビアホール</option>
-                    <option value="RSFST21000">お酒</option>
-                    <option value="RSFST18000">カフェ・スイーツ</option>
-                    <option value="RSFST19000">宴会・カラオケ・エンターテイメント</option>
-                    <option value="RSFST20000">ファミレス・ファーストフード</option>
-                    <option value="RSFST90000">その他料理</option>
+	                    <option value="RSFST09000">居酒屋</option>
+	                    <option value="RSFST02000">日本料理・郷土料理</option>
+	                    <option value="RSFST03000">寿司・魚料理・シーフード</option>
+	                    <option value="RSFST04000">鍋</option>
+	                    <option value="RSFST05000">焼肉・ホルモン</option>
+	                    <option value="RSFST06000">焼き鳥・肉料理・串料理</option>
+	                    <option value="RSFST01000">和食</option>
+	                    <option value="RSFST07000">お好み焼き・粉もの</option>
+	                    <option value="RSFST08000">ラーメン・麺料理</option>
+	                    <option value="RSFST14000">中華</option>
+	                    <option value="RSFST11000">イタリアン・フレンチ</option>
+	                    <option value="RSFST13000">洋食</option>
+	                    <option value="RSFST12000">欧米・各国料理</option>
+	                    <option value="RSFST16000">カレー</option>
+	                    <option value="RSFST15000">アジア・エスニック料理</option>
+	                    <option value="RSFST17000">オーガニック・創作料理</option>
+	                    <option value="RSFST10000">ダイニングバー・バー・ビアホール</option>
+	                    <option value="RSFST21000">お酒</option>
+	                    <option value="RSFST18000">カフェ・スイーツ</option>
+	                    <option value="RSFST19000">宴会・カラオケ・エンターテイメント</option>
+	                    <option value="RSFST20000">ファミレス・ファーストフード</option>
+	                    <option value="RSFST90000">その他料理</option>
 
-                </select>
+	                </select>
 
-                <select name="so" class="cp_sl06">
-                    <option value="" selected>表示順を選ぶ</option>
-                    <option value="">指定なし</option>
-                    <option value="1">店舗名に沿って並べる</option>
-                    <option value="2">ジャンルによって並べる</option>
-                </select>
+	                <select name="so" class="cp_sl06">
+	                    <option value="" selected>表示順を選ぶ</option>
+	                    <option value="">指定なし</option>
+	                    <option value="1">店舗名に沿って並べる</option>
+	                    <option value="2">ジャンルによって並べる</option>
+	                </select>
 
-                <span class="cp_sl06_highlight"></span>
-                <span class="cp_sl06_selectbar"></span>
-                <label class="cp_sl06_selectlabel"></label>
-            </div>
+	                <span class="cp_sl06_highlight"></span>
+	                <span class="cp_sl06_selectbar"></span>
+	                <label class="cp_sl06_selectlabel"></label>
+	            </div>
+        	</div>
         </div>
 
         <div class="abab">
