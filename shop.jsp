@@ -90,13 +90,11 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
 int shopNumber = Integer.parseInt(request.getParameter("shopNumber"));
 int o_page = Integer.parseInt(request.getParameter("offset_page"));
-// String offset_page = request.getParameter("p");
-// if (offset_page == null) {
-// 	offset_page = "1";
-// }
-// int o_page = Integer.parseInt(offset_page);
+String free = request.getParameter("freeword")
 String shop = request.getParameter("name");
 String pref = request.getParameter("pref");
+String janru = request.getParameter("category_l");
+String sort = request.getParameter("sort");
 String lunch_ = request.getParameter("lunch");
 String credit = request.getParameter("card");
 String take_out = request.getParameter("takeout");
@@ -109,13 +107,9 @@ String delivery = request.getParameter("deliverly");
 String ele_money = request.getParameter("e_money");
 String l_alleat= request.getParameter("lunch_buffet");
 String reservation = request.getParameter("web_reserve");
-<<<<<<< HEAD
+
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
-=======
 
-String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
-
->>>>>>> 5d77736767585c15db2f299841d6e01dee07ef16
 // 結果格納する配列
 String id[] = new String[20];
 String update_date[] = new String[20];
@@ -176,15 +170,10 @@ String count = ""; // 検索該当数
 String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
-<<<<<<< HEAD
-=======
 
-
-// url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&"+ params;
->>>>>>> 5d77736767585c15db2f299841d6e01dee07ef16
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + o_page + "&" + params;
+
 if (url_ != null) {
-<<<<<<< HEAD
   try {
     mhc = new MyHttpClient(url_);
     mhc.doAccess();
@@ -196,19 +185,6 @@ if (url_ != null) {
   } catch(IOException e) {
     msg += "何らかの不具合が発生しました。";
   }
-=======
-    try {
-	mhc = new MyHttpClient(url_);
-	mhc.doAccess();
-	s += mhc.body;
-    } catch(MalformedURLException e) {
-	msg += "URLが不適切です。";
-    } catch(ProtocolException e) {
-	msg += "HTTPの通信に失敗しました。";
-    } catch(IOException e) {
-	msg += "何らかの不具合が発生しました。";
-    }
->>>>>>> 5d77736767585c15db2f299841d6e01dee07ef16
 }
 // 結果格納
 pos1 = s.indexOf("\"total_hit_count\":", n);
@@ -224,7 +200,6 @@ n = pos1 + 1;
 pos2 = s.indexOf(",", n);
 page_num += "現在ページ：" + s.substring(pos1 + "\"page_offset\": ".length(), pos2);
 for (int i = 0; i < 20; i++) {
-<<<<<<< HEAD
   pos1 = s.indexOf("\"id\":", n);
   n = pos1 + 1;
   pos2 = s.indexOf(",", n);
