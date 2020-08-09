@@ -71,6 +71,27 @@ public class MyHttpClient {
 	con.disconnect();
     }
 }
+
+String useSameParams(String p) {
+	String s = p.replace("freeword", "x")
+		.replace("name", "u")
+		.replace("category_l", "var")
+		.replace("sort", "so")
+		.replace("pref", "t")
+		.replace("lunch", "a")
+		.replace("card", "b")
+		.replace("takeout", "c")
+		.replace("parking", "d")
+		.replace("outret", "e")
+		.replace("wifi", "f")
+		.replace("buffet", "g")
+		.replace("with_pet", "h")
+		.replace("deliverly", "i")
+		.replace("e_money", "j")
+		.replace("lunch_buffet", "k")
+		.replace("web_reserve", "l");
+	return s;
+}
 %>
 <%
 //リクエスト・レスポンスとも文字コードをUTF-8に
@@ -347,15 +368,15 @@ for (int i = 0; i < 20; i++) {
 	<% } %>
 	<a href="top.jsp" class="back">検索条件へ戻る</a>
 	<% if (pages != 1) { %>
-	<a href="shop-list.jsp?p=<%= pages - 1 %><%= "&" + params %>" class="back"><%= pages - 1 %></a>
+	<a href="shop-list.jsp?p=<%= pages - 1 %><%= "&" + useSameParams(params) %>" class="back"><%= pages - 1 %></a>
 	<% } %>
 	<% if (allnum % 20 == 0) { %>
 	<% if (allnum / 20 >= pages + 1) { %>
-	<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&" + params %>" class="next"><%= pages + 1 %></a>
+	<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&" + useSameParams(params) %>" class="next"><%= pages + 1 %></a>
 	<% } %>
 	<% } else { %>
 	<% if ((allnum / 20) + 1 >= pages + 1) { %>
-	<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&"+ params %>" class="next"><%= pages + 1 %></a>
+	<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&"+ useSameParams(params) %>" class="next"><%= pages + 1 %></a>
 	<% } %>
 	<% } %>
 </body>
