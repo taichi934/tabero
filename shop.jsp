@@ -88,7 +88,6 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
 int shopNumber = Integer.parseInt(request.getParameter("shopNumber"));
 int o_page = Integer.parseInt(request.getParameter("offset_page"));
-// String offset_page = request.(offset_page);
 String free = request.getParameter("freeword");
 String shop = request.getParameter("name");
 String pref = request.getParameter("pref");
@@ -107,10 +106,6 @@ String ele_money = request.getParameter("e_money");
 String l_alleat= request.getParameter("lunch_buffet");
 String reservation = request.getParameter("web_reserve");
 
-// old
-// String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
-
-// new
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 
 
@@ -173,9 +168,9 @@ String count = ""; // 検索該当数
 String pages = ""; // ページ数
 String page_num = ""; // 表示ページ
 int cou = 0;
-// url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&"+ params;
+
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + o_page + "&" + params;
-// url_ = (String)session.getAttribute("url_");
+
 if (url_ != null) {
 try {
 mhc = new MyHttpClient(url_);
