@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.net.*" %>
+<%@ page import="java.io.*,java.util.*,java.net.*,java.nio.charset.*" %>
 <%!
 /* HTMLのいくつかの文字をエスケープし，改行の前に<br>を付ける */
 String prettyPrintHTML(String s) {
@@ -98,112 +98,44 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 
 // パラメータ
 String free = request.getParameter("x");
-if(free == null) {
-	free = (String)session.getAttribute("free");
-}
 free = check(free);
-session.setAttribute("free", free);
 String shop = request.getParameter("u");
-if(shop == null) {
-	shop = (String)session.getAttribute("shop");
-}
 shop = check(shop);
-session.setAttribute("shop", shop);
 String janru = request.getParameter("var");
-if(janru == null) {
-	janru = (String)session.getAttribute("janru");
-}
 janru = check(janru);
-session.setAttribute("janru", janru);
 String sort = request.getParameter("so");
-if(sort == null) {
-	sort = (String)session.getAttribute("sort");
-}
 sort = check(sort);
-session.setAttribute("sort", sort);
 String pref = request.getParameter("t");
-if(pref == null) {
-	pref = (String)session.getAttribute("pref");
-}
 pref = check(pref);
-session.setAttribute("pref", pref);
 String offset_page = request.getParameter("p");
 if (offset_page == null) {
 	offset_page = "1";
 }
 int pages = Integer.parseInt(offset_page);
 String lunch_ = request.getParameter("a");
-if(lunch_ == null) {
-	lunch_ = (String)session.getAttribute("lunch_");
-}
 lunch_ = check(lunch_);
-session.setAttribute("lunch_", lunch_);
 String credit = request.getParameter("b");
-if(credit == null) {
-	credit = (String)session.getAttribute("credit");
-}
 credit = check(credit);
-session.setAttribute("credit", credit);
 String take_out = request.getParameter("c");
-if(take_out == null) {
-	take_out = (String)session.getAttribute("take_out");
-}
 take_out = check(take_out);
-session.setAttribute("take_out", take_out);
 String parking = request.getParameter("d");
-if(parking == null) {
-	parking = (String)session.getAttribute("parking");
-}
 parking = check(parking);
-session.setAttribute("parking", parking);
 String power = request.getParameter("e");
-if(power == null) {
-	power = (String)session.getAttribute("power");
-}
 power = check(power);
-session.setAttribute("power", power);
 String wifi = request.getParameter("f");
-if(wifi == null) {
-	wifi = (String)session.getAttribute("wifi");
-}
 wifi = check(wifi);
-session.setAttribute("wifi", wifi);
 String alleat = request.getParameter("g");
-if(alleat == null) {
-	alleat = (String)session.getAttribute("alleat");
-}
 alleat = check(alleat);
-session.setAttribute("alleat", alleat);
 String pet = request.getParameter("h");
-if(pet == null) {
-	pet = (String)session.getAttribute("pet");
-}
 pet = check(pet);
-session.setAttribute("pet", pet);
 String delivery = request.getParameter("i");
-if(delivery == null) {
-	delivery = (String)session.getAttribute("delivery");
-}
 delivery = check(delivery);
-session.setAttribute("delivery", delivery);
 String ele_money = request.getParameter("j");
-if(ele_money == null) {
-	ele_money = (String)session.getAttribute("ele_money");
-}
 ele_money = check(ele_money);
-session.setAttribute("ele_money", ele_money);
 String l_alleat = request.getParameter("k");
-if(l_alleat == null) {
-	l_alleat = (String)session.getAttribute("l_alleat");
-}
 l_alleat = check(l_alleat);
-session.setAttribute("l_alleat", l_alleat);
 String reservation = request.getParameter("l");
-if(reservation == null) {
-	reservation = (String)session.getAttribute("reservation");
-}
 reservation = check(reservation);
-session.setAttribute("reservation", reservation);
 
 // 結果格納する配列
 String update_date[] = new String[20];
@@ -217,7 +149,6 @@ String station[] = new String[20];
 String station_exit[] = new String[20];
 String walk[] = new String[20];
 String budget[] = new String[20];
-//int ave[] = new int[20];
 
 // その他
 int pos1 = 0;
@@ -229,7 +160,6 @@ int cou = 0;
 
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&" + params;
-session.setAttribute("url_", url_);
 
 if (url_ != null) {
     try {
@@ -346,10 +276,6 @@ for (int i = 0; i < 20; i++) {
 				text-align: right;
 			}
 
-			.pages {
-				position: fixed;
-			}
-
 			.b_page {
 			}
 
@@ -394,16 +320,6 @@ for (int i = 0; i < 20; i++) {
         </style>
     </head>
     <body>
-    	<div class="pages">
-    		<form action= "shop-list.jsp" method="post">
-			<select name = "so" class = "cp_sl06">
-				<option value = "" selected>表示順を選ぶ</option>
-				<option value="">指定なし</option>
-				<option value="1">店舗名に沿って並べる</option>
-				<option value="2">ジャンルによって並べる</option>
-			</select>
-			<input type="submit" value = "並び替える">
-    	</div>
 		<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
 		<h1>店舗一覧</h1>
 	    <div class = "page_info">
@@ -418,7 +334,7 @@ for (int i = 0; i < 20; i++) {
 		<br>
 	    <% for (int i = 0; i < cou; i++) {%>
 	    	<div class = "info">
-		        <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages %>">
+		        <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
 		        	<h2><%= name[i] %></h2>
 		        </a>
 		        <% if (!shop_image1[i].isEmpty()) { %>
@@ -453,15 +369,15 @@ for (int i = 0; i < 20; i++) {
 	    <% } %>
 	    <a href="top.jsp" class="back">検索条件へ戻る</a>
 	    <% if (pages != 1) { %>
-	    	<a href="shop-list.jsp?p=<%= pages - 1 %>" class="back"><%= pages - 1 %></a>
+	    	<a href="shop-list.jsp?p=<%= pages - 1 %><%= "&" + params %>" class="back"><%= pages - 1 %></a>
 	    <% } %>
 	    <% if (allnum % 20 == 0) { %>
 	    	<% if (allnum / 20 >= pages + 1) { %>
-	    		<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
+	    		<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&" + params %>" class="next"><%= pages + 1 %></a>
 	    	<% } %>
 	    <% } else { %>
 	    	<% if ((allnum / 20) + 1 >= pages + 1) { %>
-	    		<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
+	    		<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&"+ params %>" class="next"><%= pages + 1 %></a>
 	    	<% } %>
 	    <% } %>
     </body>
