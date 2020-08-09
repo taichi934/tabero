@@ -4,7 +4,6 @@
 
 
 <html>
-
 <head>
     <title>
         食べ路
@@ -59,8 +58,6 @@
     color: blue;
   	}
 */
-
-
 
         .cp_ipselect {
             position: relative;

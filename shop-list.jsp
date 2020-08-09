@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8"%>
-<!-- <%@ page session="true" %> -->
-<%@ page import="java.io.*,java.util.*,java.net.*" %>
+         pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,java.net.*,java.nio.charset.*" %>
+
 <%!
 /* HTMLのいくつかの文字をエスケープし，改行の前に<br>を付ける */
 String prettyPrintHTML(String s) {
@@ -82,112 +82,46 @@ String s = "";// bodyの内容
 MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
 String free = request.getParameter("x");
-if(free == null) {
-	free = (String)session.getAttribute("free");
-}
 free = check(free);
-session.setAttribute("free", free);
 String shop = request.getParameter("u");
-if(shop == null) {
-	shop = (String)session.getAttribute("shop");
-}
 shop = check(shop);
-session.setAttribute("shop", shop);
 String janru = request.getParameter("var");
-if(janru == null) {
-	janru = (String)session.getAttribute("janru");
-}
 janru = check(janru);
-session.setAttribute("janru", janru);
 String sort = request.getParameter("so");
-if(sort == null) {
-	sort = (String)session.getAttribute("sort");
-}
 sort = check(sort);
-session.setAttribute("sort", sort);
+
 String pref = request.getParameter("t");
-if(pref == null) {
-	pref = (String)session.getAttribute("pref");
-}
 pref = check(pref);
-session.setAttribute("pref", pref);
 String offset_page = request.getParameter("p");
 if (offset_page == null) {
 	offset_page = "1";
 }
 int pages = Integer.parseInt(offset_page);
 String lunch_ = request.getParameter("a");
-if(lunch_ == null) {
-	lunch_ = (String)session.getAttribute("lunch_");
-}
 lunch_ = check(lunch_);
-session.setAttribute("lunch_", lunch_);
 String credit = request.getParameter("b");
-if(credit == null) {
-	credit = (String)session.getAttribute("credit");
-}
 credit = check(credit);
-session.setAttribute("credit", credit);
 String take_out = request.getParameter("c");
-if(take_out == null) {
-	take_out = (String)session.getAttribute("take_out");
-}
 take_out = check(take_out);
-session.setAttribute("take_out", take_out);
 String parking = request.getParameter("d");
-if(parking == null) {
-	parking = (String)session.getAttribute("parking");
-}
 parking = check(parking);
-session.setAttribute("parking", parking);
 String power = request.getParameter("e");
-if(power == null) {
-	power = (String)session.getAttribute("power");
-}
 power = check(power);
-session.setAttribute("power", power);
 String wifi = request.getParameter("f");
-if(wifi == null) {
-	wifi = (String)session.getAttribute("wifi");
-}
 wifi = check(wifi);
-session.setAttribute("wifi", wifi);
 String alleat = request.getParameter("g");
-if(alleat == null) {
-	alleat = (String)session.getAttribute("alleat");
-}
 alleat = check(alleat);
-session.setAttribute("alleat", alleat);
 String pet = request.getParameter("h");
-if(pet == null) {
-	pet = (String)session.getAttribute("pet");
-}
 pet = check(pet);
-session.setAttribute("pet", pet);
 String delivery = request.getParameter("i");
-if(delivery == null) {
-	delivery = (String)session.getAttribute("delivery");
-}
 delivery = check(delivery);
-session.setAttribute("delivery", delivery);
 String ele_money = request.getParameter("j");
-if(ele_money == null) {
-	ele_money = (String)session.getAttribute("ele_money");
-}
 ele_money = check(ele_money);
-session.setAttribute("ele_money", ele_money);
 String l_alleat = request.getParameter("k");
-if(l_alleat == null) {
-	l_alleat = (String)session.getAttribute("l_alleat");
-}
 l_alleat = check(l_alleat);
-session.setAttribute("l_alleat", l_alleat);
 String reservation = request.getParameter("l");
-if(reservation == null) {
-	reservation = (String)session.getAttribute("reservation");
-}
 reservation = check(reservation);
-session.setAttribute("reservation", reservation);
+
 // 結果格納する配列
 String update_date[] = new String[20];
 String name[] = new String[20];
@@ -200,7 +134,7 @@ String station[] = new String[20];
 String station_exit[] = new String[20];
 String walk[] = new String[20];
 String budget[] = new String[20];
-//int ave[] = new int[20];
+
 // その他
 int pos1 = 0;
 int pos2 = 0;
@@ -208,9 +142,9 @@ int n = 0;
 String count = ""; // 検索該当数
 String page_num = ""; // 表示ページ
 int cou = 0;
+
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&" + params;
-session.setAttribute("url_", url_);
 
 
 if (url_ != null) {
@@ -241,6 +175,7 @@ pos2 = s.indexOf(",", n);
 if (pos1 != -1) {
 	page_num += s.substring(pos1 + "\"page_offset\":".length(), pos2) + "ページ目";
 }
+
 for (int i = 0; i < 20; i++) {
 	pos1 = s.indexOf("\"update_date\":", n);
 	n = pos1 + 1;
@@ -291,243 +226,90 @@ for (int i = 0; i < 20; i++) {
 	n = pos1 + 1;
 	pos2 = s.indexOf(",", n);
   budget[i] = s.substring(pos1 + "\"budget\": ".length(), pos2);
+
     cou++;
 }
 %>
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>食べ路</title>
+        <style>
+			body {
+				background: #eeebe7;
+				text-align: center;
+			}
 
-<head>
-	<meta charset="UTF-8">
-	<title>食べ路</title>
-	<style>
-		body {
-			background: #eeebe7;
-			text-align: center;
-		}
+			.info {
+				background: #FFF5EE;
+				box-shadow: 0 0 5px 1px #ccc;
+				overflow: hidden;
+			}
 
-		.info {
-			background: #FFF5EE;
-			box-shadow: 0 0 5px 1px #ccc;
-			overflow: hidden;
-		}
+			.page_info {
+				text-align: right;
+			}
 
-		.page_info {
-			text-align: right;
-		}
+			.b_page {
+			}
 
-		.pages {
-			position: fixed;
-		}
+			.back {
+				border: 2px solid #ffa042;
+				border-radius: 5px;
+				background-color: #FFFFE0;
+				padding: 20px;
+				text-align: center;
+				color: #000000;
+				width: 150px;
+			}
 
-		.b_page {}
+			.next {
+				border: 2px solid #ffa042;
+				border-radius: 5px;
+				background-color: #FFFFE0;
+				padding: 20px;
+				text-align: center;
+				color: #000000;
+				width: 150px;
+			}
 
-		.back {
-			border: 2px solid #ffa042;
-			border-radius: 5px;
-			background-color: #FFFFE0;
-			padding: 20px;
-			text-align: center;
-			color: #000000;
-			width: 150px;
-		}
+			h1 {
+				margin: 0 0 0 0;
+			  	color: red;
+			  	font-family : fantasy;
+			  	font-size : 8ex;
+			  	text-align: center;
+			    background-color: #FFF5EE;
+			}
 
-		.next {
-			border: 2px solid #ffa042;
-			border-radius: 5px;
-			background-color: #FFFFE0;
-			padding: 20px;
-			text-align: center;
-			color: #000000;
-			width: 150px;
-		}
-
-		h1 {
-			margin: 0 0 0 0;
-			color: red;
-			font-family: fantasy;
-			font-size: 8ex;
-			text-align: center;
-			background-color: #FFF5EE;
-		}
-
-		h2 {
-			text-align: center;
-		}
-
-		img {
-			width: 260px;
-			height: 260px;
-			float: right;
-		}
-	</style>
-</head>
-
-<body>
-	<div class="pages">
-		<form action="shop-list.jsp" method="post">
-			<select name="so" class="cp_sl06">
-				<option value="" selected>表示順を選ぶ</option>
-				<option value="">指定なし</option>
-				<option value="1">店舗名に沿って並べる</option>
-				<option value="2">ジャンルによって並べる</option>
-			</select>
-			<input type="submit" value="並び替える">
-	</div>
-	<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
-	<h1>店舗一覧</h1>
-	<div class="page_info">
-		<br>
-		ヒット件数：<%= allnum %>件<br>
-		<% if (pages * 20 > allnum) { %>
-		<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
-		<% } else {%>
-		<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
-		<% } %>
-	</div>
-	<br>
-	<% for (int i = 0; i < cou; i++) {%>
-	<div class="info">
-		<a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages %>">
-			<h2><%= name[i] %></h2>
-		</a>
-		<% if (!shop_image1[i].isEmpty()) { %>
-		<div style="text-align: right"><img src="<%= shop_image1[i] %>"></div><br>
-		<% } else {%>
-		<div style="text-align: right"><img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"></div><br>
-		<% } %>
-		＜店舗情報＞<br>
-		カテゴリー：<%= category[i] %><br>
-		平均予算：
-		<% if (budget[i].length() < 3) { %>
-		<br>
-		<% } else {%>
-		<%= budget[i] %>円<br>
-		<% } %>
-		営業時間：<br>
-		<%= opentime[i] %><br>
-		休業日：<%= holiday[i] %><br><br>
-		＜アクセス＞
-		<%= line[i] %><%= station[i] %><%= station_exit[i] %>
-
-		<% if (walk[i].indexOf("車") > -1) { %>
-		から徒歩<%= walk[i] %>分<br><br>
-		<% } else if (walk[i].length() > 0) {%>
-		から<%= walk[i] %>分<br><br>
-		<% } else { %>
-		<br><br>
-		<% } %>
-		＜最終更新日時＞<%= update_date[i] %><br>
-	</div>
-	<br><br><br>
-	<% } %>
-	<a href="top.jsp" class="back">検索条件へ戻る</a>
-	<% if (pages != 1) { %>
-	<a href="shop-list.jsp?p=<%= pages - 1 %>" class="back"><%= pages - 1 %></a>
-	<% } %>
-	<% if (allnum % 20 == 0) { %>
-	<% if (allnum / 20 >= pages + 1) { %>
-	<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
-	<% } %>
-	<% } else { %>
-	<% if ((allnum / 20) + 1 >= pages + 1) { %>
-	<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
-	<% } %>
-	<% } %>
-</body>
+			h2 {
+				text-align: center;
+			}
 
 			img {
 				width: 260px;
 				height: 260px;
 				float: right;
 			}
-
-			.none {
-				display: none;
-			}
         </style>
     </head>
     <body>
-    	<form action= "shop-list.jsp" method="post">
-    	<input type="text" name="u" size="50" >
-		<select name = "t" >
-	        <option value="" selected>都道府県</option>
-			<option value="PREF01">北海道</option>
-			<option value="PREF02">青森県</option>
-			<option value="PREF03">岩手県</option>
-			<option value="PREF04">宮城県</option>
-			<option value="PREF05">秋田県</option>
-			<option value="PREF06">山形県</option>
-			<option value="PREF07">福島県</option>
-			<option value="PREF08">茨城県</option>
-			<option value="PREF09">栃木県</option>
-			<option value="PREF10">群馬県</option>
-			<option value="PREF11">埼玉県</option>
-			<option value="PREF12">千葉県</option>
-			<option value="PREF13">東京都</option>
-			<option value="PREF14">神奈川県</option>
-			<option value="PREF15">新潟県</option>
-			<option value="PREF16">富山県</option>
-			<option value="PREF17">石川県</option>
-			<option value="PREF18">福井県</option>
-			<option value="PREF19">山梨県</option>
-			<option value="PREF20">長野県</option>
-			<option value="PREF21">岐阜県</option>
-			<option value="PREF22">静岡県</option>
-			<option value="PREF23">愛知県</option>
-			<option value="PREF24">三重県</option>
-			<option value="PREF25">滋賀県</option>
-			<option value="PREF26">京都府</option>
-			<option value="PREF27">大阪府</option>
-			<option value="PREF28">兵庫県</option>
-			<option value="PREF29">奈良県</option>
-			<option value="PREF30">和歌山県</option>
-			<option value="PREF31">鳥取県</option>
-			<option value="PREF32">島根県</option>
-			<option value="PREF33">岡山県</option>
-			<option value="PREF34">広島県</option>
-			<option value="PREF35">山口県</option>
-			<option value="PREF36">徳島県</option>
-			<option value="PREF37">香川県</option>
-			<option value="PREF38">愛媛県</option>
-			<option value="PREF39">高知県</option>
-			<option value="PREF40">福岡県</option>
-			<option value="PREF41">佐賀県</option>
-			<option value="PREF42">長崎県</option>
-			<option value="PREF43">熊本県</option>
-			<option value="PREF44">大分県</option>
-			<option value="PREF45">宮崎県</option>
-			<option value="PREF46">鹿児島県</option>
-			<option value="PREF47">沖縄県</option>
-		</select>
-		<div class = "none">
-			<input type = "checkbox" name = "a" value = 0 checked="checked">
-			<input type = "checkbox" name = "b" value = 0 checked="checked">
-			<input type = "checkbox" name = "c" value = 0 checked="checked">
-			<input type = "checkbox" name = "d" value = 0 checked="checked">
-			<input type = "checkbox" name = "e" value = 0 checked="checked">
-			<input type = "checkbox" name = "f" value = 0 checked="checked">
-			<input type = "checkbox" name = "g" value = 0 checked="checked">
-			<input type = "checkbox" name = "h" value = 0 checked="checked">
-			<input type = "checkbox" name = "i" value = 0 checked="checked">
-			<input type = "checkbox" name = "j" value = 0 checked="checked">
-			<input type = "checkbox" name = "k" value = 0 checked="checked">
-			<input type = "checkbox" name = "l" value = 0 checked="checked">>
-		</div>
-		<input type="submit" value = "検索"><br>
+		<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
 		<h1>店舗一覧</h1>
-    	<div class = "page">
-	    	ヒット件数：<%= allnum %>件<br>
-	    	<% if (pages * 20 > allnum) { %>
+	    <div class = "page_info">
+	    	<br>
+		   	ヒット件数：<%= allnum %>件<br>
+		   	<% if (pages * 20 > allnum) { %>
 		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
 		    <% } else {%>
 		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
 		    <% } %>
-	    </div>
-	    <br>
-    	<% for (int i = 0; i < cou; i++) {%>
-    		<div class = "info">
-		        <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages %>">
+		</div>
+		<br>
+	    <% for (int i = 0; i < cou; i++) {%>
+	    	<div class = "info">
+		        <a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
 		        	<h2><%= name[i] %></h2>
 		        </a>
 		        <% if (!shop_image1[i].isEmpty()) { %>
@@ -537,7 +319,7 @@ for (int i = 0; i < 20; i++) {
 		        <% } %>
 		        ＜店舗情報＞<br>
 		        カテゴリー：<%= category[i] %><br>
-		        平均予算：
+		       平均予算：
 		        <% if (budget[i].length() < 3) { %>
 		        	<br>
 		        <% } else {%>
@@ -548,27 +330,30 @@ for (int i = 0; i < 20; i++) {
 		        休業日：<%= holiday[i] %><br><br>
 		        ＜アクセス＞
 		        <%= line[i] %><%= station[i] %><%= station_exit[i] %>
-		        <% if (walk[i].indexOf("車") == -1) { %>
+
+		        <% if (walk[i].indexOf("車") > -1) { %>
 		        	から徒歩<%= walk[i] %>分<br><br>
-		        <% } else {%>
-		        	から<%= walk[i] %>分<br><br>
+		        <% } else if (walk[i].length() > 0) {%>
+			        	から<%= walk[i] %>分<br><br>
+			    <% } else { %>
+			    	<br><br>
 		        <% } %>
 		        ＜最終更新日時＞<%= update_date[i] %><br>
-	        </div>
-	        <br><br><br>
-    	<% } %>
-    	<a href="top.jsp" class="back">検索条件へ戻る</a>
-    	<% if (pages != 1) { %>
-    		<a href="shop-list.jsp?p=<%= pages - 1 %>" class="back"><%= pages - 1 %></a>
-    	<% } %>
-    	<% if (allnum % 20 == 0) { %>
-    		<% if (allnum / 20 >= pages + 1) { %>
-    			<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
-    		<% } %>
-    	<% } else { %>
-    		<% if ((allnum / 20) + 1 >= pages + 1) { %>
-    			<a href="shop-list.jsp?p=<%= pages + 1 %>" class="next"><%= pages + 1 %></a>
-    		<% } %>
-    	<% } %>
+		       </div>
+		       <br><br><br>
+	    <% } %>
+	    <a href="top.jsp" class="back">検索条件へ戻る</a>
+	    <% if (pages != 1) { %>
+	    	<a href="shop-list.jsp?p=<%= pages - 1 %><%= "&" + params %>" class="back"><%= pages - 1 %></a>
+	    <% } %>
+	    <% if (allnum % 20 == 0) { %>
+	    	<% if (allnum / 20 >= pages + 1) { %>
+	    		<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&" + params %>" class="next"><%= pages + 1 %></a>
+	    	<% } %>
+	    <% } else { %>
+	    	<% if ((allnum / 20) + 1 >= pages + 1) { %>
+	    		<a href="shop-list.jsp?p=<%= pages + 1 %><%= "&"+ params %>" class="next"><%= pages + 1 %></a>
+	    	<% } %>
+	    <% } %>
     </body>
 </html>
