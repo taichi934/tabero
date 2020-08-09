@@ -90,27 +90,22 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
 int shopNumber = Integer.parseInt(request.getParameter("shopNumber"));
 int o_page = Integer.parseInt(request.getParameter("offset_page"));
-// String offset_page = request.getParameter("p");
-// if (offset_page == null) {
-// 	offset_page = "1";
-// }
-// int o_page = Integer.parseInt(offset_page);
-String shop = request.getParameter("name");
-String pref = request.getParameter("pref");
-String lunch_ = request.getParameter("lunch");
-String credit = request.getParameter("card");
-String take_out = request.getParameter("takeout");
-String parking = request.getParameter("parking");
-String power = request.getParameter("outret");
-String wifi = request.getParameter("wifi");
-String alleat = request.getParameter("buffet");
-String pet = request.getParameter("with_pet");
-String delivery = request.getParameter("deliverly");
-String ele_money = request.getParameter("e_money");
-String l_alleat= request.getParameter("lunch_buffet");
-String reservation = request.getParameter("web_reserve");
+// String shop = request.getParameter("name");
+// String pref = request.getParameter("pref");
+// String lunch_ = request.getParameter("lunch");
+// String credit = request.getParameter("card");
+// String take_out = request.getParameter("takeout");
+// String parking = request.getParameter("parking");
+// String power = request.getParameter("outret");
+// String wifi = request.getParameter("wifi");
+// String alleat = request.getParameter("buffet");
+// String pet = request.getParameter("with_pet");
+// String delivery = request.getParameter("deliverly");
+// String ele_money = request.getParameter("e_money");
+// String l_alleat= request.getParameter("lunch_buffet");
+// String reservation = request.getParameter("web_reserve");
 
-String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
+// String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 
 // 結果格納する配列
 String id[] = new String[20];
@@ -174,8 +169,8 @@ String page_num = ""; // 表示ページ
 int cou = 0;
 
 
-// url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&"+ params;
-url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + o_page + "&" + params;
+// url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + o_page + "&" + params;
+url_ = (String)session.getAttribute("url_ ");
 
 if (url_ != null) {
     try {
@@ -194,11 +189,11 @@ if (url_ != null) {
 pos1 = s.indexOf("\"total_hit_count\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
-count += "該当件数：" + s.substring(pos1 + "\"total_hit_count\": \"".length(), pos2-1)+ "件";
+count += "該当件数：" + s.substring(pos1 + "\"total_hit_count\": ".length(), pos2)+ "件";
 pos1 = s.indexOf("\"hit_per_page\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
-pages += "総ページ数：" + s.substring(pos1 + "\"hit_per_page\": \"".length(), pos2-1);
+pages += "総ページ数：" + s.substring(pos1 + "\"hit_per_page\": ".length(), pos2);
 pos1 = s.indexOf("\"page_offset\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
@@ -486,9 +481,20 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 			margin-left: 30px;
 		}
 
-		/* img .route-map {
-			background-size: cover;
-		} */
+		.back-btn {
+			margin-top: 40px;
+			margin-bottom: 40px;
+		}
+
+		.back {
+			border: 2px solid #ffa042;
+			border-radius: 5px;
+			background-color: #FFFFE0;
+			padding: 10px;
+			text-align: center;
+			color: #000000;
+			width: 150px;
+		}
 	</style>
 </head>
 
@@ -574,6 +580,12 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 						徒歩：<%= walk[shopNumber] %>分<br>
 						備考：<%= note[shopNumber] %><br>
 					</div>
+				</div>
+
+				<hr>
+
+				<div class="back-btn">
+					<a class="back" href="<%= "shop-list.jsp?offset_page=" + o_page %>">検索結果に戻る</a>
 				</div>
 			</div>
 
