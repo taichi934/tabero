@@ -386,7 +386,7 @@ for (int i = 0; i < 20; i++) {
 	<br>
 	<% for (int i = 0; i < cou; i++) {%>
 	<div class="info">
-		<a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
+		<a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages %>">
 			<h2><%= name[i] %></h2>
 		</a>
 		<% if (!shop_image1[i].isEmpty()) { %>
