@@ -181,10 +181,8 @@
         .mask {
         	background: rgba(255,255,255,0.5);
 			height: 110%;
-			width: 105%;
 			position: relative;
 			bottom: 16px;
-			right: 13px;
         }
 
         .abab {
