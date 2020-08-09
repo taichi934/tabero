@@ -266,93 +266,71 @@ for (int i = 0; i < 20; i++) {
 				text-align: center;
 			}
 
-<head>
-	<meta charset="UTF-8">
-	<title>食べ路</title>
-	<style>
-		body {
-			background: #eeebe7;
-			text-align: center;
-		}
+			.info {
+				background: #FFF5EE;
+				box-shadow: 0 0 5px 1px #ccc;
+				overflow: hidden;
+			}
 
-		.info {
-			background: #FFF5EE;
-			box-shadow: 0 0 5px 1px #ccc;
-			overflow: hidden;
-		}
+			.page_info {
+				text-align: right;
+			}
 
-		.page_info {
-			text-align: right;
-		}
+			.b_page {
+			}
 
-		.back {
-			border: 2px solid #ffa042;
-			border-radius: 5px;
-			background-color: #FFFFE0;
-			padding: 20px;
-			text-align: center;
-			color: #000000;
-			width: 150px;
-		}
+			.back {
+				border: 2px solid #ffa042;
+				border-radius: 5px;
+				background-color: #FFFFE0;
+				padding: 20px;
+				text-align: center;
+				color: #000000;
+				width: 150px;
+			}
 
-		.next {
-			border: 2px solid #ffa042;
-			border-radius: 5px;
-			background-color: #FFFFE0;
-			padding: 20px;
-			text-align: center;
-			color: #000000;
-			width: 150px;
-		}
+			.next {
+				border: 2px solid #ffa042;
+				border-radius: 5px;
+				background-color: #FFFFE0;
+				padding: 20px;
+				text-align: center;
+				color: #000000;
+				width: 150px;
+			}
 
-		h1 {
-			margin: 0 0 0 0;
-			color: red;
-			font-family: fantasy;
-			font-size: 8ex;
-			text-align: center;
-			background-color: #FFF5EE;
-		}
+			h1 {
+				margin: 0 0 0 0;
+			  	color: red;
+			  	font-family : fantasy;
+			  	font-size : 8ex;
+			  	text-align: center;
+			    background-color: #FFF5EE;
+			}
 
-		h2 {
-			text-align: center;
-		}
+			h2 {
+				text-align: center;
+			}
 
-		img {
-			width: 260px;
-			height: 260px;
-			float: right;
-		}
-	</style>
-</head>
-
-<body>
-	<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
-	<h1>店舗一覧</h1>
-	<div class="page_info">
-		<br>
-		ヒット件数：<%= allnum %>件<br>
-		<% if (pages * 20 > allnum) { %>
-		<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
-		<% } else {%>
-		<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
-		<% } %>
-	</div>
-	<br>
-	<% for (int i = 0; i < cou; i++) {%>
-	<div class="info">
-		<a href="shop.jsp?shopNumber=<%= i + "&offset_page=" + pages + "&" + params %>">
-			<h2><%= name[i] %></h2>
-		</a>
-		<% if (!shop_image1[i].isEmpty()) { %>
-		<div style="text-align: right"><img src="<%= shop_image1[i] %>"></div><br>
-		<% } else {%>
-		<div style="text-align: right"><img src="http://design-ec.com/d/e_others_50/m_e_others_500.jpg"></div><br>
-		<% } %>
-		＜店舗情報＞<br>
-		カテゴリー：<%= category[i] %><br>
-		平均予算：
-		<% if (budget[i].length() < 3) { %>
+			img {
+				width: 260px;
+				height: 260px;
+				float: right;
+			}
+        </style>
+    </head>
+    <body>
+		<a href="top.jsp" class="b_page">検索条件へ戻る</a><br><br>
+		<h1>店舗一覧</h1>
+	    <div class = "page_info">
+	    	<br>
+		   	ヒット件数：<%= allnum %>件<br>
+		   	<% if (pages * 20 > allnum) { %>
+		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= allnum %>件）<br>
+		    <% } else {%>
+		       	<%= page_num %>（<%= (pages - 1) * 20 + 1 %>件～<%= pages * 20 %>件）<br>
+		    <% } %>
+		</div>
 		<br>
 	    <% for (int i = 0; i < cou; i++) {%>
 	    	<div class = "info">
