@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
+<!-- <%@ page session="true" %> -->
 <%@ page import="java.io.*,java.util.*,java.net.*" %>
 <%!
 /* HTMLのいくつかの文字をエスケープし，改行の前に<br>を付ける */
@@ -209,7 +210,7 @@ String page_num = ""; // 表示ページ
 int cou = 0;
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 url_ = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=e1634a8f3875638b03556ea66966bf88&hit_per_page=20&offset_page=" + offset_page + "&" + params;
-// session.setAttribute("url_", url_);
+session.setAttribute("url_", url_);
 if (url_ != null) {
     try {
 	mhc = new MyHttpClient(url_);

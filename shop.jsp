@@ -88,11 +88,7 @@ MyHttpClient mhc; // HTTPで通信するためのインスタンス
 // パラメータ
 int shopNumber = Integer.parseInt(request.getParameter("shopNumber"));
 int o_page = Integer.parseInt(request.getParameter("offset_page"));
-// String offset_page = request.getParameter("p");
-// if (offset_page == null) {
-// 	offset_page = "1";
-// }
-// int o_page = Integer.parseInt(offset_page);
+// String offset_page = request.(offset_page);
 String free = request.getParameter("freeword");
 String shop = request.getParameter("name");
 String pref = request.getParameter("pref");
@@ -110,7 +106,11 @@ String delivery = request.getParameter("deliverly");
 String ele_money = request.getParameter("e_money");
 String l_alleat= request.getParameter("lunch_buffet");
 String reservation = request.getParameter("web_reserve");
+
+// old
 // String params = "name=" + shop + "&pref=" + pref + "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
+
+// new
 String params = "freeword=" + free + "&name=" + shop + "&pref=" + pref + "&category_l=" + janru + "&sort=" + sort +  "&lunch=" + lunch_ + "&card=" + credit + "&takeout=" + take_out + "&parking=" + parking + "&outret=" + power + "&wifi=" + wifi + "&buffet=" + alleat + "&with_pet=" + pet + "&deliverly=" + delivery + "&e_money=" + ele_money + "&lunch_buffet=" + l_alleat + "&web_reserve=" + reservation;
 
 
@@ -426,7 +426,7 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 	<title>店舗情報</title>
 	<style>
 		body {
-			background-color: #ffffdd;
+			background-color: #FFF5EE;
 		}
 
 		.shop-upper {
@@ -482,9 +482,20 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 			margin-left: 30px;
 		}
 
-		/* img .route-map {
-   background-size: cover;
-} */
+		.back-btn {
+			margin-top: 40px;
+			margin-bottom: 40px;
+		}
+
+		.back {
+			border: 2px solid #ffa042;
+			border-radius: 5px;
+			background-color: #FFFFE0;
+			padding: 10px;
+			text-align: center;
+			color: #000000;
+			width: 150px;
+		}
 	</style>
 </head>
 
@@ -571,6 +582,12 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 						備考：<%= note[shopNumber] %><br>
 					</div>
 				</div>
+			</div>
+
+			<hr>
+
+			<div class="back-btn">
+				<a class="back" href="<%= "shop-list.jsp?offset_page=" + o_page + "&" + params %>">検索結果に戻る</a>
 			</div>
 
 		</div>
