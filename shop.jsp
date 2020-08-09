@@ -38,16 +38,16 @@ public class MyHttpClient {
   /* 実際にアクセスし，フィールドheaderおよびbodyに値を格納する */
   public void doAccess()
   throws MalformedURLException, ProtocolException, IOException {
-  
+
     /* 接続準備 */
     URL u = new URL(url);
     HttpURLConnection con = (HttpURLConnection)u.openConnection();
     con.setRequestMethod("GET");
     con.setInstanceFollowRedirects(true);
-    
+
     /* 接続 */
     con.connect();
-    
+
     /* レスポンスヘッダの獲得 */
     Map<String, List<String>> headers = con.getHeaderFields();
     StringBuilder sb = new StringBuilder();
@@ -56,12 +56,12 @@ public class MyHttpClient {
       String key = (String) it.next();
       sb.append("  " + key + ": " + headers.get(key) + "\n");
     }
-    
+
     /* レスポンスコードとメッセージ */
     sb.append("RESPONSE CODE [" + con.getResponseCode() + "]\n");
     sb.append("RESPONSE MESSAGE [" + con.getResponseMessage() + "]\n");
     header = sb.toString();
-    
+
     /* レスポンスボディの獲得 */
     BufferedReader reader = new BufferedReader(
       new InputStreamReader(con.getInputStream(),
@@ -72,7 +72,7 @@ public class MyHttpClient {
       sb.append(line + "\n");
     }
     body = sb.toString();
-    
+
     /* 接続終了 */
     reader.close();
     con.disconnect();
@@ -423,6 +423,25 @@ pos1 = s.indexOf("\"y\":", n);
 n = pos1 + 1;
 pos2 = s.indexOf(",", n);
 ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
+
+// shop-listで条件を引き継げるようにparams を修正
+String newParams = params.replace("freeword", "x")
+	.replace("name", "u")
+	.replace("category_l", "var")
+	.replace("sort", "so")
+	.replace("pref", "t")
+	.replace("lunch", "a")
+	.replace("card", "b")
+	.replace("takeout", "c")
+	.replace("parking", "d")
+	.replace("outret", "e")
+	.replace("wifi", "f")
+	.replace("buffet", "g")
+	.replace("with_pet", "h")
+	.replace("deliverly", "i")
+	.replace("e_money", "j")
+	.replace("lunch_buffet", "k")
+	.replace("web_reserve", "l");
 %>
 
 <!DOCTYPE html>
@@ -588,13 +607,7 @@ ido = Double.parseDouble(s.substring(pos1 + "\"y\":".length(), pos2));
 			</div>
 			<hr>
 			<div class="back-btn">
-				<a class="back" href="<%= "shop-list.jsp?offset_page=" + o_page + "&" + params %>">検索結果に戻る</a>
-			</div>
-
-			<hr>
-
-			<div class="back-btn">
-				<a class="back" href="<%= "shop-list.jsp?offset_page=" + o_page + "&" + params %>">検索結果に戻る</a>
+				<a class="back" href="<%= "shop-list.jsp?p=" + o_page + "&" + newParams %>">検索結果に戻る</a>
 			</div>
 
 		</div>
