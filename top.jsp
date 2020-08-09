@@ -207,7 +207,6 @@
         .subtitle {
             font-size: 30px;
             margin: 0 0 10px 0;
-            opacity: 1;
         }
 
         .btn {
