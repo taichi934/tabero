@@ -73,8 +73,8 @@ public class MyHttpClient {
 
 // 店舗写真がなければ別の写真を返す
 String checkImage(String image1, String image2) {
-	if (image1 != "") return image1;
-	else if (image2 != "") return image2;
+	if (!image1.isEmpty()) return image1;
+	else if (!image2.isEmpty()) return image2;
 	else return "http://design-ec.com/d/e_others_50/m_e_others_500.jpg";
 }
 
